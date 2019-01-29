@@ -15,8 +15,6 @@
         <p>{{$message}}</p>
       </div>
     @endif
-
-     <div id="message"> </div>
     <input type="hidden" id="student_id" value="{{ $student->id }}">
 
     <h5 class="card-title">{{$student->Apellidos}} {{$student->Nombre}} </h5>
@@ -69,6 +67,7 @@
 
     </div>
 
+
     <a href="/students/{{$student->id}}/edit"t class="btn btn-primary" style="float:right; margin:5px;">Editar</a>
 
     <form class="" action={{action('StudentController@destroy', $student->id)}} method="post">
@@ -89,6 +88,10 @@ $(document).ready(function(){
   var student_id = $("#student_id").val();
 
   fetch_data();
+  
+  var studentData = {};
+  
+  $('#update').fadeOut();
 
   function fetch_data()
   {
@@ -97,21 +100,20 @@ $(document).ready(function(){
     url:"/fetch_data/{id}",
     data: { id: student_id },
     dataType:"json",
-
-    success:function(response)
+    success:function(data)
     {
-      console.log(response);
+      studentData = data;
+      console.log(data);
       var html = '';
-
       html +='<tr>';
-      html += '<td> <input type="text" class="date" name="autRegistro" id="autRegistro" value="'+response.autRegistro+'">  </td>';
-      html += '<td> <input type="date" name="recibido" id="recibido" value="'+response.recibido+'">  </td>';
-      html += '<td> <input type="date" name="liberación" id="liberación" value="'+response.liberación+'">  </td>';
-      html += '<td> <input type="date" name="solicitudActo" id="solicitudActo" value="'+response.solicitudActo+'">  </td>';
-      html += '<td> <input type="date" name="actoProtocolario" id="actoProtocolario" value="'+response.actoProtocolario+'">  </td>';
+      html += '<td> <input type="date" class='datepicker' name="autRegistro" id="autRegistro" value="'+data.autRegistro+'">  </td>';
+      html += '<td> <input type="date" class='datepicker' name="recibido" id="recibido" value="'+data.recibido+'">  </td>';
+      html += '<td> <input type="date" class='datepicker' name="liberación" id="liberación" value="'+data.liberación+'">  </td>';
+      html += '<td> <input type="date" class='datepicker' name="solicitudActo" id="solicitudActo" value="'+data.solicitudActo+'">  </td>';
+      html += '<td> <input type="date" class='datepicker' name="actoProtocolario" id="actoProtocolario" value="'+data.actoProtocolario+'">  </td>';
+
 
    $('tbody').html(html);
-
     },
 
     error: function(response)
@@ -121,45 +123,61 @@ $(document).ready(function(){
 
    });
   }
+  
+  $(document).on('click', '.datepicker', function(){
+     var autRegistro = $('#autRegistro').text();
+      var recibido = $('#recibido').text();
+      var liberación = $('#liberación').text();
+      var solicitudActo = $('#solicitudActo').text();
+      var actoProtocolario = $('#actoProtocolario').text();
+      
+      if (authRegistro == studentData.authRegistro 
+        && recibido == studentData.recibido
+        && liberacion == studentData.liberacion
+        && solicitudActo == studentData.solicitudActio
+        && actoProtocolario == studentData.actoProtocolario) {
+            $('#update').fadeOut();
+        }  else {
+        $('#update').fadeIn()
+        }
+    
+  })
 
   var _token = $('input[name="_token"]').val();
 
-  $(".date").datepicker({
-  onSelect: function(dateText) {
-    display("Selected date: " + dateText + "; input's current value: " + this.value);
-  }
-});
-
-function display(msg) {
-    $("<p>").html(msg).appendTo(document.body);
-  }
-
-
-
   $(document).on('click', '#update', function(){
 
-  var autRegistro = $("#autRegistro").datepicker({ dateFormat: 'dd,mm,yyyy' }).val();
-  var recibido = $("#recibido").datepicker({ dateFormat: 'dd,mm,yyyy' }).val();
-  var liberación = $("#liberación").datepicker({ dateFormat: 'dd,mm,yyyy' }).val();
-  var solicitudActo = $("#solicitudActo").datepicker({ dateFormat: 'dd,mm,yyyy' }).val();
-  var actoProtocolario = $("#actoProtocolario").datepicker({ dateFormat: 'dd,mm,yyyy' }).val();
 
-  console.log("Estoy actualizando");
+  var autRegistro = $('#autRegistro').text();
+  var recibido = $('#recibido').text();
+  var liberación = $('#liberación').text();
+  var solicitudActo = $('#solicitudActo').text();
+  var actoProtocolario = $('#actoProtocolario').text();
 
+  
+
+  console.log("Estoy clickeando");
+  console.log(autRegistro);
+
+  // if(autRegistro != '' && recibido != '' && liberación != '' && solicitudActo != ''&& actoProtocolario !='')
+  //{
    $.ajax({
     url:"{{ route('seguimiento.update_data') }}",
     method:"POST",
     data:{autRegistro:autRegistro, recibido:recibido, liberación:liberación, solicitudActo:solicitudActo, actoProtocolario:actoProtocolario, id:student_id,  _token:_token},
-    //dataType:"json",
-
-    success:function(response)
+    dataType:"json",
+    success:function(data)
     {
-     $('#message').html("<div class='alert alert-success'> "+response+" </div>");
+     $('#message').html(data);
      fetch_data();
     }
 
    });
-
+  //}
+  // else
+  // {
+  //  $('#message').html("<div class='alert alert-danger'>Both Fields are required</div>");
+  // }
  });
 
 
