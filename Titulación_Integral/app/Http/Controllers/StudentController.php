@@ -138,34 +138,34 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-      if($request->input('liberación')||$request->input('solicitudActo')||$request->input('actoProtocolario'))
-      {
-        if($request->input('liberación'))
-        {
-          $seguimiento = Seguimiento::where('id',$student->id)
-          ->update([
-            'liberación'=>$request->input('liberación')
-          ]);
-        }
-
-        if($request->input('solicitudActo'))
-        {
-          $seguimiento = Seguimiento::where('id',$student->id)
-          ->update([
-            'solicitudActo'=>$request->input('solicitudActo')
-          ]);
-        }
-
-        if($request->input('actoProtocolario'))
-        {
-          $seguimiento = Seguimiento::where('id',$student->id)
-          ->update([
-            'actoProtocolario'=>$request->input('actoProtocolario')
-          ]);
-        }
-
-        return redirect()->route("students.show",$student)->with('success','Alumno Modificado');
-      }
+      // if($request->input('liberación')||$request->input('solicitudActo')||$request->input('actoProtocolario'))
+      // {
+      //   if($request->input('liberación'))
+      //   {
+      //     $seguimiento = Seguimiento::where('id',$student->id)
+      //     ->update([
+      //       'liberación'=>$request->input('liberación')
+      //     ]);
+      //   }
+      //
+      //   if($request->input('solicitudActo'))
+      //   {
+      //     $seguimiento = Seguimiento::where('id',$student->id)
+      //     ->update([
+      //       'solicitudActo'=>$request->input('solicitudActo')
+      //     ]);
+      //   }
+      //
+      //   if($request->input('actoProtocolario'))
+      //   {
+      //     $seguimiento = Seguimiento::where('id',$student->id)
+      //     ->update([
+      //       'actoProtocolario'=>$request->input('actoProtocolario')
+      //     ]);
+      //   }
+      //
+      //   return redirect()->route("students.show",$student)->with('success','Alumno Modificado');
+      // }
 
       //Actualización de datos del Estudiante
       $student->NoControl = $request->input('numeroControl');
