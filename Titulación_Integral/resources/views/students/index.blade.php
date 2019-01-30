@@ -16,6 +16,14 @@
       </div>
     @endif
 
+    @if ($message = Session::get('eliminado'))
+      <div class="alert alert-danger">
+        <p>{{$message}}</p>
+      </div>
+    @endif
+
+
+
     <div align='right'>
       <a href="{{route('students.create')}}" class = 'btn btn-primary'>Añadir</a>
     </div>

@@ -222,6 +222,6 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         $student->delete();
-        return redirect()->route("students.index")->with('success','Alumno Eliminado');
+        return redirect()->route("students.index")->with('eliminado','Alumno Eliminado');
     }
 }

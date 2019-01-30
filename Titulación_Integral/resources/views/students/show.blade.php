@@ -5,9 +5,10 @@
 
 <br>
 <div class="card">
-  <div class="card-header">
+  {{-- <div class="card-header">
     SEGUIMIENTO
-  </div>
+  </div> --}}
+
   <div class="card-body">
 
     @if ($message = Session::get('success'))
@@ -20,6 +21,7 @@
     <input type="hidden" id="student_id" value="{{ $student->id }}">
 
     <h5 class="card-title">{{$student->Apellidos}} {{$student->Nombre}} </h5>
+
     <p class="card-text">
       {{$student->Correo}}
       &nbsp;&nbsp; * &nbsp;&nbsp;
@@ -35,7 +37,6 @@
     <br>
 
     <div class="">
-      {{-- @include('students.seguimiento') --}}
       <div class="table-responsive">
         <table id="editable_table" class="table table-bordered table-striped">
           <thead>
@@ -51,33 +52,35 @@
           <tbody>
 
           </tbody>
-            {{-- <tr>
-              <td>{{$student->seguimiento->autRegistro}}</td>
-              <td>{{$student->seguimiento->recibido}}</td>
-              <td><input type="date" name="liberación"></td>
-              <td><input type="date" name="solicitudActo"></td>
-              <td><input type="date" name="actoProtocolario"></td>
-              <td contenteditable="true" class="date-selector"></td>
-            </tr> --}}
+
           </table>
           {{ csrf_field() }}
       </div>
-
-        <button class="btn btn-success btn-xs" id="update" >Actualizar</button>
-
-
-
+        <button class="btn btn-success btn-xs" style="display:none;" id="update" >Actualizar</button>
+    </div>
+    <br>
+    <div class="cajaObservaciones">
+      <div class="tituloObservaciones">
+        <p>Observaciones</p>
+      </div>
+      <br>
+      <div class="">
+        <form>
+          <textarea placeholder="Escriba Algo" id="observaciones"> </textarea>
+        </form>
+      </div>
     </div>
 
-    <a href="/students/{{$student->id}}/edit"t class="btn btn-primary" style="float:right; margin:5px;">Editar</a>
+
+    <a href="/students/{{$student->id}}/edit" id="buttonEdit" class="btn btn-primary" style="float:right; margin:5px;">Editar</a>
 
     <form class="" action={{action('StudentController@destroy', $student->id)}} method="post">
       @method('DELETE')
       @csrf
-      <button type="submit" class="btn btn-danger text center" style="float:right; margin:5px;">Borrar</button>
+      <button type="submit" class="btn btn-danger text center" id="buttonDelete" style="float:right; margin:5px;">Borrar</button>
     </form>
-
   </div>
+
 </div>
 @endsection
 
@@ -90,6 +93,10 @@ $(document).ready(function(){
 
   fetch_data();
 
+  var studentData= {};
+
+  $('#update').fadeOut();
+
   function fetch_data()
   {
    $.ajax({
@@ -100,15 +107,18 @@ $(document).ready(function(){
 
     success:function(response)
     {
-      console.log(response);
+      studentData=response;
+
+      //console.log(response);
       var html = '';
 
       html +='<tr>';
-      html += '<td> <input type="text" class="date" name="autRegistro" id="autRegistro" value="'+response.autRegistro+'">  </td>';
-      html += '<td> <input type="date" name="recibido" id="recibido" value="'+response.recibido+'">  </td>';
-      html += '<td> <input type="date" name="liberación" id="liberación" value="'+response.liberación+'">  </td>';
-      html += '<td> <input type="date" name="solicitudActo" id="solicitudActo" value="'+response.solicitudActo+'">  </td>';
-      html += '<td> <input type="date" name="actoProtocolario" id="actoProtocolario" value="'+response.actoProtocolario+'">  </td>';
+      html += '<td> <input type="date" class="datepicker" name="autRegistro" id="autRegistro" value="'+response.autRegistro+'">  </td>';
+      html += '<td> <input type="date" class="datepicker" name="recibido" id="recibido" value="'+response.recibido+'">  </td>';
+      html += '<td> <input type="date" class="datepicker" name="liberación" id="liberación" value="'+response.liberación+'">  </td>';
+      html += '<td> <input type="date" class="datepicker" name="solicitudActo" id="solicitudActo" value="'+response.solicitudActo+'">  </td>';
+      html += '<td> <input type="date" class="datepicker" name="actoProtocolario" id="actoProtocolario" value="'+response.actoProtocolario+'">  </td>';
+      html += '<td> '+ response.status +'  </td>';
 
    $('tbody').html(html);
 
@@ -124,16 +134,38 @@ $(document).ready(function(){
 
   var _token = $('input[name="_token"]').val();
 
-  $(".date").datepicker({
-  onSelect: function(dateText) {
-    display("Selected date: " + dateText + "; input's current value: " + this.value);
-  }
-});
+  $(document).on('change', '.datepicker', function(){
 
-function display(msg) {
-    $("<p>").html(msg).appendTo(document.body);
-  }
+    var autRegistro = $("#autRegistro").datepicker({ dateFormat: 'dd,mm,yyyy' }).val();
+    var recibido = $("#recibido").datepicker({ dateFormat: 'dd,mm,yyyy' }).val();
+    var liberación = $("#liberación").datepicker({ dateFormat: 'dd,mm,yyyy' }).val();
+    var solicitudActo = $("#solicitudActo").datepicker({ dateFormat: 'dd,mm,yyyy' }).val();
+    var actoProtocolario = $("#actoProtocolario").datepicker({ dateFormat: 'dd,mm,yyyy' }).val();
 
+
+
+      if (autRegistro == studentData.autRegistro
+          && recibido == studentData.recibido
+          && liberación == studentData.liberación
+          && solicitudActo == studentData.solicitudActo
+          && actoProtocolario == studentData.actoProtocolario)
+          {
+            $('#update').fadeOut();
+          }
+
+        else
+        {
+          $('#update').fadeIn()
+        }
+
+
+  });
+
+    // $(document).on('blur', '#observaciones', function(){
+    //
+    //   var observaciones =
+    //
+    // });
 
 
   $(document).on('click', '#update', function(){
@@ -154,8 +186,10 @@ function display(msg) {
 
     success:function(response)
     {
-     $('#message').html("<div class='alert alert-success'> "+response+" </div>");
+    //$('#overlay').fadeIn('fast').delay(1000).fadeOut('fast');
+     $('#message').fadeIn('slow').html("<div class='alert alert-success'> "+response+" </div>").delay(2000).fadeOut('slow');
      fetch_data();
+     $('#update').fadeOut();
     }
 
    });

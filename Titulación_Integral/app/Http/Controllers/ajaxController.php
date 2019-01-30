@@ -21,7 +21,8 @@ class ajaxController extends Controller
         $student = Student::where('id', '=', $id)->first();
 
         $seguimiento = ["autRegistro" => $student->seguimiento->autRegistro, "recibido" => $student
-        ->seguimiento->recibido, "liberación"=>$student->seguimiento->liberación,"solicitudActo"=>$student->seguimiento->solicitudActo,"actoProtocolario"=>$student->seguimiento->actoProtocolario];
+        ->seguimiento->recibido, "liberación"=>$student->seguimiento->liberación,"solicitudActo"=>$student->seguimiento->solicitudActo,"actoProtocolario"=>$student->seguimiento->actoProtocolario, "status"=>$student->seguimiento->status->nombre];
+
         echo json_encode($seguimiento);
       }
     }
@@ -35,9 +36,34 @@ class ajaxController extends Controller
           "liberación"=>$request->liberación,
           "solicitudActo"=>$request->solicitudActo,"actoProtocolario"=>$request->actoProtocolario]);
 
-          echo 'Información Actualizada';
+          $seguimiento = Seguimiento::where('id',$request->id)->first();
+
+          if($seguimiento->actoProtocolario != null)
+          {
+            $seguimiento = Seguimiento::where('id',$request->id)
+            ->update(["status_id" => 2]);
+
+            echo 'Alumno Titulado';
+          }
+          else {
+            $seguimiento = Seguimiento::where('id',$request->id)
+            ->update(["status_id" => 1]);
+            echo 'Información Actualizada';
+          }
 
         }
+
       }
+
+      // public function update_status(Request $request)
+      // {
+      //   if($request->ajax())
+      //   {
+      //     $seguimiento = Seguimiento::where('id',$request->id)
+      //     ->update(["status_id" => 2]);
+      //
+      //     echo 'Alumno Titulado';
+      //   }
+      // }
 
 }

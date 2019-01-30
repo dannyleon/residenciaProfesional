@@ -24,3 +24,5 @@ Route::post('/search', 'searchController@search');
 Route::get('fetch_data/{id}','ajaxController@fetch_data');
 
 Route::post('update_data','ajaxController@update_data')->name('seguimiento.update_data');
+
+Route::post('update_status', 'ajaxController@update_status')->name('seguimiento.update_status');

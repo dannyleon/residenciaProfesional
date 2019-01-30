@@ -12,7 +12,6 @@
 
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 
-<
     {{-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> --}}
 
@@ -22,6 +21,57 @@
     margin: 20px;
 
     left: 10px;
+    }
+
+    .card-body{
+      position: relative;
+    }
+
+    #buttonEdit{
+      position: absolute;
+      top: 15px;
+      right: 100px;
+      padding: 2px 12px;
+      font-size: 14px;
+
+    }
+
+    #buttonDelete{
+      position: absolute;
+      top: 15px;
+      right: 16px;
+      padding: 2px 12px;
+      font-size: 14px;
+    }
+
+    textarea {
+      width: 50%;
+      height: 150px;
+      padding: 12px 20px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #f8f8f8;
+      font-size: 14px;
+      resize: none;
+    }
+
+    .tituloObservaciones{
+
+      background-color: #f8f8f8;
+      border: none;
+      /* color: white; */
+      padding: 2px 5px;
+      text-decoration: none;
+      margin: 2px 1px;
+      /* cursor: pointer; */
+      text-align: center;
+      width: 50%
+    }
+
+    .cajaObservaciones{
+
+
     }
     </style>
 

@@ -30,7 +30,7 @@ class Seguimiento extends Model
 
      public function status()
     {
-        return $this->belongsTo('TitIntegral\Estado','id');
+        return $this->belongsTo('TitIntegral\Estado', 'status_id');
     }
 
 }
