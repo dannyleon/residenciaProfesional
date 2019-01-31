@@ -60,7 +60,6 @@ class StudentController extends Controller
         $student->PeriodoIngreso = $request->input('periodoIngreso');
         $student->AñoTitulación = 0;
         $student->PeriodoTitulación = 0;
-        $student->observaciones = "";
         $student->Sexo = $request->input('sexo');
 
         $student->save();
@@ -93,6 +92,7 @@ class StudentController extends Controller
         $seguimiento->actoProtocolario = null;
         $seguimiento->status_id = 1;
         $seguimiento->student_id = $student->id;
+        $seguimiento->observaciones = '';
 
 
         $seguimiento->save();
@@ -138,34 +138,6 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-      // if($request->input('liberación')||$request->input('solicitudActo')||$request->input('actoProtocolario'))
-      // {
-      //   if($request->input('liberación'))
-      //   {
-      //     $seguimiento = Seguimiento::where('id',$student->id)
-      //     ->update([
-      //       'liberación'=>$request->input('liberación')
-      //     ]);
-      //   }
-      //
-      //   if($request->input('solicitudActo'))
-      //   {
-      //     $seguimiento = Seguimiento::where('id',$student->id)
-      //     ->update([
-      //       'solicitudActo'=>$request->input('solicitudActo')
-      //     ]);
-      //   }
-      //
-      //   if($request->input('actoProtocolario'))
-      //   {
-      //     $seguimiento = Seguimiento::where('id',$student->id)
-      //     ->update([
-      //       'actoProtocolario'=>$request->input('actoProtocolario')
-      //     ]);
-      //   }
-      //
-      //   return redirect()->route("students.show",$student)->with('success','Alumno Modificado');
-      // }
 
       //Actualización de datos del Estudiante
       $student->NoControl = $request->input('numeroControl');
@@ -177,7 +149,6 @@ class StudentController extends Controller
       $student->PeriodoIngreso = $request->input('periodoIngreso');
       $student->AñoTitulación = 0;
       $student->PeriodoTitulación = 0;
-      $student->observaciones = "";
       $student->Sexo = $request->input('sexo');
 
       $student->save();

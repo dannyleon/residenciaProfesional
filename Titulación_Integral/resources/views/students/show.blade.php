@@ -36,55 +36,60 @@
       @endforeach</p>
     <br>
 
-    <div class="">
-      <div class="table-responsive">
-        <table id="editable_table" class="table table-bordered table-striped">
-          <thead>
-            <tr>
-              <th>Autorización de Registro</th>
-              <th>Recibido en Titulación</th>
-              <th>Liberación de proyecto</th>
-              <th>Solicitud de Fecha</th>
-              <th>Acto Protocolario</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
+      <div class="">
+        <div class="table-responsive">
+          <table id="editable_table" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>Autorización de Registro</th>
+                <th>Recibido en Titulación</th>
+                <th>Liberación de proyecto</th>
+                <th>Solicitud de Fecha</th>
+                <th>Acto Protocolario</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
 
-          </tbody>
+            </tbody>
 
-          </table>
-          {{ csrf_field() }}
-      </div>
+            </table>
+            {{ csrf_field() }}
+        </div>
         <button class="btn btn-success btn-xs" style="display:none;" id="update" >Actualizar</button>
     </div>
+
     <br>
     <div class="cajaObservaciones">
       <div class="tituloObservaciones">
         <p>Observaciones</p>
       </div>
       <br>
-      <div class="">
-        <form>
-          <textarea placeholder="Escriba Algo" id="observaciones"> </textarea>
-        </form>
+      <div>
+        <textarea placeholder= "Escriba Algo" id="observaciones"></textarea>
       </div>
     </div>
 
-
     <a href="/students/{{$student->id}}/edit" id="buttonEdit" class="btn btn-primary" style="float:right; margin:5px;">Editar</a>
 
-    <form class="" action={{action('StudentController@destroy', $student->id)}} method="post">
+
+
+    {{-- <form class="" action={{action('StudentController@destroy', $student->id)}} method="post">
       @method('DELETE')
-      @csrf
+      @csrf --}}
       <button type="submit" class="btn btn-danger text center" id="buttonDelete" style="float:right; margin:5px;">Borrar</button>
-    </form>
+    {{-- </form> --}}
+
+
+
+
   </div>
 
 </div>
 @endsection
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -109,7 +114,7 @@ $(document).ready(function(){
     {
       studentData=response;
 
-      //console.log(response);
+      console.log(response);
       var html = '';
 
       html +='<tr>';
@@ -120,7 +125,10 @@ $(document).ready(function(){
       html += '<td> <input type="date" class="datepicker" name="actoProtocolario" id="actoProtocolario" value="'+response.actoProtocolario+'">  </td>';
       html += '<td> '+ response.status +'  </td>';
 
-   $('tbody').html(html);
+
+      $('tbody').html(html);
+
+      $('#observaciones').val(response.observaciones);
 
     },
 
@@ -142,8 +150,6 @@ $(document).ready(function(){
     var solicitudActo = $("#solicitudActo").datepicker({ dateFormat: 'dd,mm,yyyy' }).val();
     var actoProtocolario = $("#actoProtocolario").datepicker({ dateFormat: 'dd,mm,yyyy' }).val();
 
-
-
       if (autRegistro == studentData.autRegistro
           && recibido == studentData.recibido
           && liberación == studentData.liberación
@@ -158,14 +164,24 @@ $(document).ready(function(){
           $('#update').fadeIn()
         }
 
-
   });
 
-    // $(document).on('blur', '#observaciones', function(){
-    //
-    //   var observaciones =
-    //
-    // });
+  $(document).on('keydown', '#observaciones', function(){
+
+      var observaciones = $("#observaciones").val();
+
+
+      if (observaciones == studentData.observaciones)
+        {
+          $('#update').fadeOut();
+        }
+
+      else
+        {
+          $('#update').fadeIn()
+        }
+
+  });
 
 
   $(document).on('click', '#update', function(){
@@ -175,19 +191,20 @@ $(document).ready(function(){
   var liberación = $("#liberación").datepicker({ dateFormat: 'dd,mm,yyyy' }).val();
   var solicitudActo = $("#solicitudActo").datepicker({ dateFormat: 'dd,mm,yyyy' }).val();
   var actoProtocolario = $("#actoProtocolario").datepicker({ dateFormat: 'dd,mm,yyyy' }).val();
+  var observaciones = $("#observaciones").val();
 
-  console.log("Estoy actualizando");
 
    $.ajax({
     url:"{{ route('seguimiento.update_data') }}",
     method:"POST",
-    data:{autRegistro:autRegistro, recibido:recibido, liberación:liberación, solicitudActo:solicitudActo, actoProtocolario:actoProtocolario, id:student_id,  _token:_token},
+    data:{autRegistro:autRegistro, recibido:recibido, liberación:liberación, solicitudActo:solicitudActo, actoProtocolario:actoProtocolario, observaciones:observaciones, id:student_id,  _token:_token},
     //dataType:"json",
 
     success:function(response)
     {
     //$('#overlay').fadeIn('fast').delay(1000).fadeOut('fast');
      $('#message').fadeIn('slow').html("<div class='alert alert-success'> "+response+" </div>").delay(2000).fadeOut('slow');
+     console.log("Estoy actualizando");
      fetch_data();
      $('#update').fadeOut();
     }
@@ -195,6 +212,62 @@ $(document).ready(function(){
    });
 
  });
+
+  $(document).on('click', '#buttonDelete', function(){
+
+    swal({
+      title: "¿Estás seguro?",
+      text: "Una vez eliminado, no podrás recuperar la información de este alumno.",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete)
+      {
+
+        $.ajax({
+          url:"{{ route('student.delete_data') }}",
+          method:"POST",
+          data:{id:student_id, _token:_token},
+          success:function(data)
+          {
+
+            //fetch_data();
+            $.ajax({
+              url:"{{ url('students') }}",
+              method:"GET",
+              //data:{id:student_id, _token:_token},
+              success:function()
+              {
+                window.location.href = '{{url("students")}}';
+              }
+              });
+
+            swal("El Alumno ha sido Eliminado!", {
+            icon: "success",
+            });
+
+
+            },
+            error: function(response){
+              swal({
+                title: 'Oops...',
+                text: data.message,
+                type: 'error',
+                timer:'1500'
+              })
+            }
+
+          });
+      }
+      else
+      {
+        //swal("Your imaginary file is safe!");
+      }
+});
+
+  });
 
 
 });
