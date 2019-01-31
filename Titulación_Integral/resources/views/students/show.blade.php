@@ -234,20 +234,21 @@ $(document).ready(function(){
           {
 
             //fetch_data();
-            $.ajax({
-              url:"{{ url('students') }}",
-              method:"GET",
-              //data:{id:student_id, _token:_token},
-              success:function()
-              {
-                window.location.href = '{{url("students")}}';
-              }
-              });
+            // $.ajax({
+            //   url:"{{ url('students') }}",
+            //   method:"GET",
+            //   //data:{id:student_id, _token:_token},
+            //   success:function()
+            //   {
+            //     window.location.href = '{{url("students")}}';
+            //   }
+            //   });
 
             swal("El Alumno ha sido Eliminado!", {
-            icon: "success",
-            });
+              icon: "success",
+              //buttons: true,
 
+            }).then(function(){window.location.href = '{{url("students")}}'});
 
             },
             error: function(response){
@@ -260,6 +261,10 @@ $(document).ready(function(){
             }
 
           });
+
+
+
+
       }
       else
       {
