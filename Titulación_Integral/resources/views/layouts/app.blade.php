@@ -75,18 +75,16 @@
     }
     </style>
 
-
-
   </head>
 
   <body>
 
     <nav class="navbar navbar-dark bg-primary">
       <a href="{{route('students.index')}}" class="navbar-brand">Titulación Integral</a>
-
+      
       <form action="{{URL::to('\search')}}" method="post" role="search" class="form-inline" >
         @csrf
-        <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" name="buscar">
+        <input class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Search" name="q">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
       </form>
     </nav>

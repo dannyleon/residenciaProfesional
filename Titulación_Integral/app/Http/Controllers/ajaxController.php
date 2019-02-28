@@ -7,6 +7,7 @@ use TitIntegral\Carrera;
 use TitIntegral\Metodo;
 use TitIntegral\Seguimiento;
 use TitIntegral\Estado;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 
@@ -25,6 +26,7 @@ class ajaxController extends Controller
 
         echo json_encode($seguimiento);
       }
+
     }
 
       public function update_data(Request $request)
@@ -32,26 +34,93 @@ class ajaxController extends Controller
         if($request->ajax())
         {
 
-          $seguimiento = Seguimiento::where('id',$request->id)
-          ->update(["autRegistro" => $request->autRegistro, "recibido" => $request->recibido,
-          "liberación"=>$request->liberación,
-          "solicitudActo"=>$request->solicitudActo,"actoProtocolario"=>$request->actoProtocolario,
-          "observaciones"=>$request->observaciones]);
+          if($request->observaciones == "")
+          {
+            $seguimiento = Seguimiento::where('id',$request->id)
+            ->update(["autRegistro" => $request->autRegistro, "recibido" => $request->recibido,
+            "liberación"=>$request->liberación,
+            "solicitudActo"=>$request->solicitudActo,"actoProtocolario"=>$request->actoProtocolario,
+            "observaciones"=> ""]);
+          }
+          else {
+            $seguimiento = Seguimiento::where('id',$request->id)
+            ->update(["autRegistro" => $request->autRegistro, "recibido" => $request->recibido,
+            "liberación"=>$request->liberación,
+            "solicitudActo"=>$request->solicitudActo,"actoProtocolario"=>$request->actoProtocolario,
+            "observaciones"=>$request->observaciones]);
 
+          }
 
 
           $seguimiento = Seguimiento::where('id',$request->id)->first();
 
           if($seguimiento->actoProtocolario != null)
           {
-            $seguimiento = Seguimiento::where('id',$request->id)
-            ->update(["status_id" => 2]);
+            $fecha = new Carbon($seguimiento->actoProtocolario);
+            $fecha->year;
+            $fecha->month;
 
+            if($fecha->month == '1'|| $fecha->month == '2' || $fecha->month == '3'|| $fecha->month == '4'|| $fecha->month == '5'|| $fecha->month == '6' )
+            {
+              $student = Student::where('id',$request->id)
+              ->update(["AñoTitulación"=> $fecha->year, "PeriodoTitulación" => 1]);
+
+              $seguimiento = Seguimiento::where('id',$request->id)
+              ->update(["status_id" => 2]);
+
+
+
+              //echo 'Información Actualizada';
+
+            }
+            else {
+
+              $student = Student::where('id',$request->id)
+              ->update(["AñoTitulación"=> $fecha->year, "PeriodoTitulación" => 2]);
+
+              $seguimiento = Seguimiento::where('id',$request->id)
+              ->update(["status_id" => 2]);
+
+              //echo 'Información Actualizada';
+            }
+
+            //Cálculo de semestres Cursados
+            $student = Student::where('id',$request->id)->first();
+            $AT = $student->AñoTitulación;
+            $AI = $student->AñoIngreso;
+            $PT = $student->PeriodoTitulación;
+            $PI = $student->PeriodoIngreso;
+
+            $semestresTotales = ($AT-$AI) * 2;
+            $periodo = ($PI-$PT);
+
+
+            if($periodo == 1) {
+              $student->SemestresCursados = $semestresTotales;
+            }
+            elseif ($periodo == 0) {
+              $student->SemestresCursados = $semestresTotales + 1;
+            }else {
+              $student->SemestresCursados = $semestresTotales + 2;
+            }
+
+            $student->save();
             echo 'Información Actualizada';
+
           }
           else {
+
             $seguimiento = Seguimiento::where('id',$request->id)
             ->update(["status_id" => 1]);
+
+            $student = Student::where('id', $request->id)
+            ->update(["AñoTitulación" => 0, "PeriodoTitulación" => 0]);
+
+            $student = Student::where('id', $request->id)
+            ->update(["SemestresCursados" => 0]);
+
+
+
             echo 'Información Actualizada';
           }
 

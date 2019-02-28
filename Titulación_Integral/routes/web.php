@@ -19,10 +19,20 @@ Route::get('/', function () {
 
 Route::resource('students','StudentController');
 
-Route::post('/search', 'searchController@search');
+//Route::post('/search', 'searchController@search');
 
 Route::get('fetch_data/{id}','ajaxController@fetch_data');
 
 Route::post('update_data','ajaxController@update_data')->name('seguimiento.update_data');
 
 Route::post('delete_data', 'ajaxController@delete_data')->name('student.delete_data');
+
+Route::get('/estadistica', 'EstadisticaController@view')->name('estadistica.view');
+
+Route::any('/search','searchController@buscar');
+
+Route::get('/titulados', 'searchController@search');
+
+// Route::get('/titulados',function () {
+//   return "Hola Daniel";
+// });

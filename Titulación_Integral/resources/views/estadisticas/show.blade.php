@@ -1,12 +1,92 @@
-<div id ='contenedor'>
-  contenedor
+@extends('layouts.app')
+@section('title', 'Estadística')
+@section('content')
+
+  <br>
+  <div class="input-group">
+     <select id="periodoTIT" class="form-control">
+       <option disabled selected>Período Escolar</option>
+       <option value="1"> ENERO-JUNIO </option>
+       <option value="2"> AGOSTO-DICIEMBRE </option>
+    </select>
+    &nbsp;&nbsp; * &nbsp;&nbsp;
+    <input type="number" id="añoTIT" class="form-control" placeholder="Año">
+ </div>
+ <br>
+ <button class="btn btn-outline-success my-2 my-sm-0" id="mostrar" type="submit">Buscar</button>
+ <br>
+
+
+<div class="container">
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>Alumnos Titulados </h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+            <th>No.Control</th>
+            <th>Apellidos</th>
+            <th>Nombre</th>
+            <th>PeriodoIngreso</th>
+            <th>AñoIngreso</th>
+            <th>Proyecto</th>
+            <th>PeriodoTIT</th>
+            <th>AñoTIT</th>
+            <th>FechaTIT</th>
+            <th>Semestres Cursados</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+      </table>
+    </div>
+    </div>
+  </div>
 </div>
 
-<canvas id="myChart" width="400" height="400"></canvas>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
 
-    <script type="text/javascript">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script type="text/javascript">
+
+  $('#mostrar').on('click',function()
+  {
+    var e = document.getElementById("periodoTIT");
+    var periodoTIT = e.options[e.selectedIndex].value;
+    var añoTIT = $("#añoTIT").val();
+    console.log(periodoTIT);
+    console.log(añoTIT);
+
+
+    $.ajax({
+      type: "GET",
+      url : '{{URL::to('/titulados')}}',
+      data:{ periodoTIT:periodoTIT, añoTIT:añoTIT },
+      success:function(data){
+
+      $('tbody').html(data);
+
+      }
+      });
+
+  });
+
+</script>
+
+<script type="text/javascript">
+  $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+</script>
+
+@endsection
+
+
+{{-- <canvas id="myChart" width="400" height="400"></canvas> --}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+
+{{-- <script type="text/javascript">
 
     var ctx = document.getElementById("myChart").getContext('2d');
 
@@ -57,4 +137,4 @@
     }
 });
 
-    </script>
+</script> --}}
