@@ -32,7 +32,3 @@ Route::get('/estadistica', 'EstadisticaController@view')->name('estadistica.view
 Route::any('/search','searchController@buscar');
 
 Route::get('/titulados', 'searchController@search');
-
-// Route::get('/titulados',function () {
-//   return "Hola Daniel";
-// });

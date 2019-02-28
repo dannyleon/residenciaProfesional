@@ -140,6 +140,9 @@ class StudentController extends Controller
     {
 
       //Actualización de datos del Estudiante
+      $periodoActual = $student->PeriodoIngreso;
+
+
       $student->NoControl = $request->input('numeroControl');
       $student->Nombre = $request->input('nombre');
       $student->Apellidos = $request->input('apellido');
@@ -147,8 +150,6 @@ class StudentController extends Controller
       $student->Carrera_id = $request->input('carrera');
       $student->AñoIngreso = $request->input('añoIngreso');
       $student->PeriodoIngreso = $request->input('periodoIngreso');
-      $student->AñoTitulación = 0;
-      $student->PeriodoTitulación = 0;
       $student->Sexo = $request->input('sexo');
 
       $student->save();
@@ -180,8 +181,40 @@ class StudentController extends Controller
         'recibido'=>$request->input('recibido')
       ]);
 
+      if( $periodoActual != $request->input('periodoIngreso')){
+
+        return $this->calculoSemestres($student->id);
+
+        }
+
       return redirect()->route("students.show",$student)->with('success','Alumno Modificado');
 
+    }
+
+    public function calculoSemestres($id)
+    {
+      //Cálculo de semestres Cursados
+      $student = Student::where('id',$id)->first();
+      $AT = $student->AñoTitulación;
+      $AI = $student->AñoIngreso;
+      $PT = $student->PeriodoTitulación;
+      $PI = $student->PeriodoIngreso;
+
+      $semestresTotales = ($AT-$AI) * 2;
+      $periodo = ($PI-$PT);
+
+
+      if($periodo == 1) {
+        $student->SemestresCursados = $semestresTotales;
+      }
+      elseif ($periodo == 0) {
+        $student->SemestresCursados = $semestresTotales + 1;
+      }else {
+        $student->SemestresCursados = $semestresTotales + 2;
+      }
+
+      $student->save();
+      return redirect()->route("students.show",$student)->with('success','Alumno Modificado');
     }
 
     /**
