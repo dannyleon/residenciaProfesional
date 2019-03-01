@@ -1,17 +1,17 @@
 <br>
 <div class="form-group">
   <label for="">No.Control:</label>
-  <input type="text" name="numeroControl" value="{{$student->NoControl}}" class="form-control" required>
+  <input type="number" name="numeroControl" value="{{$student->NoControl}}" class="form-control" required>
 </div>
 
 <div class="form-group">
   <label for="">Apellidos:</label>
-  <input type="text" name="apellido" value="{{$student->Apellidos}}"class="form-control">
+  <input type="text" name="apellido" value="{{$student->Apellidos}}"class="form-control" required>
 </div>
 
 <div class="form-group">
   <label for="">Nombre:</label>
-  <input type="text" name="nombre" value="{{$student->Nombre}}"class="form-control">
+  <input type="text" name="nombre" value="{{$student->Nombre}}"class="form-control" required>
 </div>
 
 <div class="form-group">
@@ -21,8 +21,7 @@
 
 <div class="form-group">
   <label for="">Carrera:</label>
-
-   <select name="carrera" class="form-control">
+   <select name="carrera" class="form-control" required>
      <option value="{{$student->carrera->id}}">{{$student->carrera->nombre}}</option>
     @foreach ($carrera as $carrera => $value)
     <option value="{{ $carrera }}"> {{ $value }} </option>
@@ -38,22 +37,22 @@
 
   <div class="form-group">
     <label for="">Telefono(2):</label>
-    <input type="text" name="tel2" value="{{$student->telefonos[1]->numeroTel}}" class="form-control">
+    <input type="text" name="tel2" value="{{$student->telefonos[1]->numeroTel}}" class="form-control" required>
   </div>
 
   <div class="form-group">
     <label for="">Telefono(3):</label>
-    <input type="text"  name="tel3" value="{{$student->telefonos[2]->numeroTel}}" class="form-control">
+    <input type="text"  name="tel3" value="{{$student->telefonos[2]->numeroTel}}" class="form-control" required>
   </div>
 
 <div class="form-group">
   <label for="">Año de Ingreso:</label>
-  <input type="number" name="añoIngreso" value="{{$student->AñoIngreso}}"class="form-control">
+  <input type="number" name="añoIngreso" value="{{$student->AñoIngreso}}"class="form-control" required>
 </div>
 
 <div class="form-group">
   <label for="">Periodo de Ingreso:</label>
-  <input type="number" name="periodoIngreso" value="{{$student->PeriodoIngreso}}" min="1" max="2" >
+  <input type="number" name="periodoIngreso" value="{{$student->PeriodoIngreso}}" min="1" max="2" required>
 </div>
 
 <div class="form-group">
@@ -68,8 +67,8 @@
 </div>
 
 <div class="form-group">
-  <label for="">Método de Titulación:</label>
-   <select name="metodo" class="form-control">
+  <label for="">Opciones para Titulación:</label>
+   <select name="metodo" class="form-control" required>
      {{-- <option> --Selecciona Metodo-- </option> --}}
      <option value="{{$student->seguimiento->metodo->id}}">{{$student->seguimiento->metodo->nombre}}</option>
     @foreach ($metodo as $opcion => $value)
@@ -81,10 +80,10 @@
 
 <div class="form-group">
   <label for="">Autorización de Registro:</label>
-  <input type="date" name="autoResgistro" value="{{$student->seguimiento->autRegistro}}">
+  <input type="date" name="autoResgistro" value="{{$student->seguimiento->autRegistro}}" required>
 </div>
 
 <div class="form-group">
   <label for="">Fecha de Recibido:</label>
-  <input type="date" name="recibido" value="{{$student->seguimiento->recibido}}">
+  <input type="date" name="recibido" value="{{$student->seguimiento->recibido}}" required>
 </div>

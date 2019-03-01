@@ -56,9 +56,6 @@
     var e = document.getElementById("periodoTIT");
     var periodoTIT = e.options[e.selectedIndex].value;
     var añoTIT = $("#añoTIT").val();
-    console.log(periodoTIT);
-    console.log(añoTIT);
-
 
     $.ajax({
       type: "GET",

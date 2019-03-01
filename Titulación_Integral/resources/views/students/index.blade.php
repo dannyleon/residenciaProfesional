@@ -22,6 +22,16 @@
       </div>
     @endif
 
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
 
 
     <div align='right'>
@@ -51,4 +61,14 @@
     </table>
   </div>
 </div>
+
 @endsection
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    $('.alert-success').fadeIn('slow').delay(2000).fadeOut('slow');
+  });
+
+</script>

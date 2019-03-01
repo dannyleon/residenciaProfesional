@@ -4,22 +4,18 @@
 @section('content')
 
 <br>
+@if ($message = Session::get('success'))
+  <div class="alert alert-success">
+    <p>{{$message}}</p>
+  </div>
+@endif
+<div id="message"> </div>
 <div class="card">
   {{-- <div class="card-header">
     SEGUIMIENTO
   </div> --}}
-
   <div class="card-body">
-
-    @if ($message = Session::get('success'))
-      <div class="alert alert-success">
-        <p>{{$message}}</p>
-      </div>
-    @endif
-
-     <div id="message"> </div>
     <input type="hidden" id="student_id" value="{{ $student->id }}">
-
     <h5 class="card-title">{{$student->Apellidos}} {{$student->Nombre}} </h5>
 
     <p class="card-text">
@@ -90,6 +86,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -101,6 +98,8 @@ $(document).ready(function(){
   var studentData= {};
 
   $('#update').fadeOut();
+
+  $('.alert-success').fadeIn('slow').delay(2000).fadeOut('slow');
 
   function fetch_data()
   {
@@ -204,7 +203,6 @@ $(document).ready(function(){
     {
     //$('#overlay').fadeIn('fast').delay(1000).fadeOut('fast');
      $('#message').fadeIn('slow').html("<div class='alert alert-success'> "+response+" </div>").delay(2000).fadeOut('slow');
-     console.log("Estoy actualizando");
      fetch_data();
      $('#update').fadeOut();
     }

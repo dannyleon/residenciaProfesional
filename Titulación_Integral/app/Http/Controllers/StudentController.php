@@ -47,8 +47,26 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //return $request;
 
+        //Validación de datos
+        $validatedData = $request->validate([
+        'numeroControl' => 'required|digits_between:1,10',
+        'nombre' => 'required|max:191',
+        'apellido' => 'required|max:191',
+        'correo' => 'required|max:191',
+        'carrera' => 'required',
+        'añoIngreso' => 'required|numeric|digits:4',
+        'periodoIngreso' => 'required|numeric|digits:1',
+        'sexo' => 'required|max:191',
+        'tel1' => 'required|max:191',
+        'tel2' => 'required|max:191',
+        'tel3' => 'required|max:191',
+        'metodo' => 'required',
+        'autoResgistro' => 'required',
+        'recibido' => 'required',
+         ]);
+
+        //Guardar tabla students
         $student = new Student();
 
         $student->NoControl = $request->input('numeroControl');
@@ -58,12 +76,11 @@ class StudentController extends Controller
         $student->Carrera_id = $request->input('carrera');
         $student->AñoIngreso = $request->input('añoIngreso');
         $student->PeriodoIngreso = $request->input('periodoIngreso');
-        $student->AñoTitulación = 0;
-        $student->PeriodoTitulación = 0;
         $student->Sexo = $request->input('sexo');
 
         $student->save();
 
+        //Guardar tabla telefonos
         $phone = new Telefono();
 
         $phone->student_id = $student->id;
@@ -82,24 +99,19 @@ class StudentController extends Controller
         $phone->numeroTel = $request->input('tel3');
         $phone->save();
 
+        //Guardar tabla seguimientos
         $seguimiento = new Seguimiento();
 
         $seguimiento->metodo_id = $request->input('metodo');
         $seguimiento->autRegistro = $request->input('autoResgistro');
         $seguimiento->recibido = $request->input('recibido');
-        $seguimiento->liberación = null;
-        $seguimiento->solicitudActo = null;
-        $seguimiento->actoProtocolario = null;
-        $seguimiento->status_id = 1;
         $seguimiento->student_id = $student->id;
         $seguimiento->observaciones = '';
 
-
         $seguimiento->save();
 
-
         return redirect()->route('students.index')->with('success','Alumno Añadido');
-
+        
     }
 
     /**
@@ -138,10 +150,26 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
+      //Validación de datos
+      $validatedData = $request->validate([
+      'numeroControl' => 'required|digits_between:1,10',
+      'nombre' => 'required|max:191',
+      'apellido' => 'required|max:191',
+      'correo' => 'required|max:191',
+      'carrera' => 'required',
+      'añoIngreso' => 'required|numeric|digits:4',
+      'periodoIngreso' => 'required|numeric|digits:1',
+      'sexo' => 'required|max:191',
+      'tel1' => 'required|max:191',
+      'tel2' => 'required|max:191',
+      'tel3' => 'required|max:191',
+      'metodo' => 'required',
+      'autoResgistro' => 'required',
+      'recibido' => 'required',
+       ]);
 
       //Actualización de datos del Estudiante
       $periodoActual = $student->PeriodoIngreso;
-
 
       $student->NoControl = $request->input('numeroControl');
       $student->Nombre = $request->input('nombre');
@@ -186,7 +214,6 @@ class StudentController extends Controller
         return $this->calculoSemestres($student->id);
 
         }
-
       return redirect()->route("students.show",$student)->with('success','Alumno Modificado');
 
     }
