@@ -13,23 +13,19 @@
     <div class="col-xs-3">
       <input type="number" id="añoTIT" class="form-control" placeholder="Año">
     </div>
-    &nbsp;&nbsp; * &nbsp;&nbsp;
+    &nbsp;&nbsp;  &nbsp;&nbsp;
     <button type="submit" class="btn btn-primary" id="mostrar">Mostrar</button>
+    &nbsp;&nbsp;  &nbsp;&nbsp;
+    <button type="submit" class="btn btn-primary" id="imprimir">Imprimir</button>
 </div>
 
-<br>
-
+<br><br>
 
 <div class="container">
   <div class="row">
     <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4>Alumnos Titulados </h4>
-      </div>
-      <br>
       <div class="panel-body">
         <div class="contenedor-de-tablas">
-
 
         {{-- <table class="table table-bordered table-hover">
           <thead>
@@ -60,22 +56,45 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script type="text/javascript">
 
+$('#imprimir').on('click',function(){
+
+  window.print();
+});
+
   $('#mostrar').on('click',function()
   {
     var e = document.getElementById("periodoTIT");
     var periodoTIT = e.options[e.selectedIndex].value;
     var añoTIT = $("#añoTIT").val();
 
+    if(periodoTIT == 1)
+    {
+      var periodoLetra = "Enero-Junio";
+    }else {
+      periodoLetra = "Agosto-Diciembre";
+    }
+
     $.ajax({
       type: "GET",
       url : '{{URL::to('/titulados')}}',
       data:{ periodoTIT:periodoTIT, añoTIT:añoTIT },
       success:function(data){
-
+        $('.contenedor-de-tablas').empty();
 
         console.log(data);
 
-        var html = '<table class="table table-bordered table-hover">';
+        //variables para contar hombres y mujeres de cada carrera
+        var hombres = 0
+        var mujeres = 0
+
+        var html = `<div class="panel-heading">
+                      <h4>Alumnos Titulados </h4>
+                      <h6>${periodoLetra} ${añoTIT}</h6>
+                      <br>
+                    </div>`;
+
+
+        var inicioTabla = '<table class="table table-bordered table-hover">';
         var carreraActualTitulo = `<h6>${data[0].carrera.nombre}</h6>`;
         var cabecera = `<tr>
         <th>No.Control</th>
@@ -91,24 +110,45 @@
         </tr>`;
 
         //cabecera de la tabla
-        html += cabecera
         html += carreraActualTitulo
+        html += inicioTabla
+        html += cabecera
+
         var actualCarrera = data[0].carrera.nombre;
 
         for ( var key in data) {
           var actualStudent = data[key]
 
           if(actualStudent.carrera.nombre != actualCarrera){
+
             actualCarrera = actualStudent.carrera.nombre;
             carreraActualTitulo = `<h6>${actualStudent.carrera.nombre}</h6>`;
+
+            var suma = mujeres + hombres
+            html+=`
+            <tr>
+              <td>Hombres: ${hombres}</td>
+              <td>Mujeres: ${mujeres}</td>
+              <td>Total: ${suma}</td>
+            </tr>`
+
             //cerrar tabla actual
             html+="</table>";
+            //reiniciar contadores de mujeres y hombres
+            hombres = 0;
+            mujeres = 0;
 
             //crear nueva tabla
             html+='<table class="table table-bordered table-hover">';
             //repetir cabecera
             html += cabecera;
             html += carreraActualTitulo;
+          }
+
+          if (actualStudent.Sexo == 'hombre'){
+            hombres++
+          } else {
+            mujeres++
           }
 
           //datos del alumno
@@ -127,8 +167,17 @@
 
         }
 
+        var suma = mujeres + hombres
+        html+=`
+        <tr>
+          <td>Hombres: ${hombres}</td>
+          <td>Mujeres: ${mujeres}</td>
+          <td>Total: ${suma}</td>
+        </tr>`
+
         //Cerrar ultima tabla
         html+= "</table>";
+
         //insertar en html
         $('.contenedor-de-tablas').append(html);
 
