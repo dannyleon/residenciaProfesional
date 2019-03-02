@@ -111,7 +111,7 @@ class StudentController extends Controller
         $seguimiento->save();
 
         return redirect()->route('students.index')->with('success','Alumno Añadido');
-        
+
     }
 
     /**
@@ -215,6 +215,7 @@ class StudentController extends Controller
 
         }
       return redirect()->route("students.show",$student)->with('success','Alumno Modificado');
+      
 
     }
 

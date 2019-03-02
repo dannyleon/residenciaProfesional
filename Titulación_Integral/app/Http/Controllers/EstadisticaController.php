@@ -22,30 +22,40 @@ class EstadisticaController extends Controller
       if($request->ajax())
       {
 
-        $output="";
+        //$output="";
         $students = Student::where('PeriodoTitulación','=',$request->periodoTIT)
         ->where('AñoTitulación','=',$request->añoTIT)
+        ->with('carrera')
+        ->with('seguimiento.metodo')
         ->get();
 
-        if($students)
-        {
-          foreach ($students as $key => $student)
-          {
-            $output.='<tr>'.
-            '<td>'.$student->NoControl.'</td>'.
-            '<td>'.$student->Apellidos.'</td>'.
-            '<td>'.$student->Nombre.'</td>'.
-            '<td>'.$student->PeriodoIngreso.'</td>'.
-            '<td>'.$student->AñoIngreso.'</td>'.
-            '<td>'.$student->seguimiento->metodo->nombre.'</td>'.
-            '<td>'.$student->PeriodoTitulación.'</td>'.
-            '<td>'.$student->AñoTitulación.'</td>'.
-            '<td>'.$student->seguimiento->actoProtocolario.'</td>'.
-            '<td>'.$student->SemestresCursados.'</td>'.
-            '</tr>';
-          }
-          return Response($output);
-         }
+
+        $sortedStudents = $students->sortBy('Carrera_id')->values();
+        return Response($sortedStudents);
+
+
+        // if($sortedStudents)
+        // {
+        //   foreach ($sortedStudents as $key => $student)
+        //   {
+        //     $output.='<tr>'.
+        //     '<td>'.$student->NoControl.'</td>'.
+        //     '<td>'.$student->Apellidos.'</td>'.
+        //     '<td>'.$student->Nombre.'</td>'.
+        //     '<td>'.$student->PeriodoIngreso.'</td>'.
+        //     '<td>'.$student->AñoIngreso.'</td>'.
+        //     '<td>'.$student->seguimiento->metodo->nombre.'</td>'.
+        //     '<td>'.$student->PeriodoTitulación.'</td>'.
+        //     '<td>'.$student->AñoTitulación.'</td>'.
+        //     '<td>'.$student->seguimiento->actoProtocolario.'</td>'.
+        //     '<td>'.$student->SemestresCursados.'</td>'.
+        //     '<td>'.$student->carrera->nombre.'</td>'.
+        //     '</tr>';
+        //   }
+        //   return Response($output);
+        //  }
+
        }
+
      }
 }

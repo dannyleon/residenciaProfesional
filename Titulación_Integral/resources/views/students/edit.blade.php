@@ -17,7 +17,7 @@
     @csrf
     @include('students.formEdit')
     <button class="btn btn-primary">Actualizar</button>
-    <a href="{{route('students.index')}}" class="btn btn-danger"> Cancelar </a>
+    <a href="{{route("students.show",$student)}}" class="btn btn-danger"> Cancelar </a>
   </form>
 
 

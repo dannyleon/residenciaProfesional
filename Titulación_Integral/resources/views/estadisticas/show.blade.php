@@ -3,28 +3,35 @@
 @section('content')
 
   <br>
-  <div class="input-group">
-     <select id="periodoTIT" class="form-control">
+<div class="input-group" align="center">
+     <select id="periodoTIT" class="form-control" style="max-width:25%;">
        <option disabled selected>Período Escolar</option>
        <option value="1"> ENERO-JUNIO </option>
        <option value="2"> AGOSTO-DICIEMBRE </option>
-    </select>
+     </select>
     &nbsp;&nbsp; * &nbsp;&nbsp;
-    <input type="number" id="añoTIT" class="form-control" placeholder="Año">
- </div>
- <br>
- <button class="btn btn-outline-success my-2 my-sm-0" id="mostrar" type="submit">Buscar</button>
- <br>
+    <div class="col-xs-3">
+      <input type="number" id="añoTIT" class="form-control" placeholder="Año">
+    </div>
+    &nbsp;&nbsp; * &nbsp;&nbsp;
+    <button type="submit" class="btn btn-primary" id="mostrar">Mostrar</button>
+</div>
+
+<br>
 
 
 <div class="container">
   <div class="row">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3>Alumnos Titulados </h3>
+        <h4>Alumnos Titulados </h4>
       </div>
+      <br>
       <div class="panel-body">
-        <table class="table table-bordered table-hover">
+        <div class="contenedor-de-tablas">
+
+
+        {{-- <table class="table table-bordered table-hover">
           <thead>
             <tr>
             <th>No.Control</th>
@@ -37,11 +44,13 @@
             <th>AñoTIT</th>
             <th>FechaTIT</th>
             <th>Semestres Cursados</th>
+            <th>Carrera</th>
             </tr>
           </thead>
           <tbody>
           </tbody>
-      </table>
+      </table> --}}
+      </div>
     </div>
     </div>
   </div>
@@ -63,10 +72,70 @@
       data:{ periodoTIT:periodoTIT, añoTIT:añoTIT },
       success:function(data){
 
-      $('tbody').html(data);
 
+        console.log(data);
+
+        var html = '<table class="table table-bordered table-hover">';
+        var carreraActualTitulo = `<h6>${data[0].carrera.nombre}</h6>`;
+        var cabecera = `<tr>
+        <th>No.Control</th>
+        <th>Apellidos</th>
+        <th>Nombre</th>
+        <th>Periodo Ingreso</th>
+        <th>Año Ingreso</th>
+        <th>Proyecto</th>
+        <th>PeriodoTIT</th>
+        <th>AñoTIT</th>
+        <th>FechaTIT</th>
+        <th>Semestres Cursados</th>
+        </tr>`;
+
+        //cabecera de la tabla
+        html += cabecera
+        html += carreraActualTitulo
+        var actualCarrera = data[0].carrera.nombre;
+
+        for ( var key in data) {
+          var actualStudent = data[key]
+
+          if(actualStudent.carrera.nombre != actualCarrera){
+            actualCarrera = actualStudent.carrera.nombre;
+            carreraActualTitulo = `<h6>${actualStudent.carrera.nombre}</h6>`;
+            //cerrar tabla actual
+            html+="</table>";
+
+            //crear nueva tabla
+            html+='<table class="table table-bordered table-hover">';
+            //repetir cabecera
+            html += cabecera;
+            html += carreraActualTitulo;
+          }
+
+          //datos del alumno
+          html+= `<tr>
+                      <td>${actualStudent.NoControl}</td>
+                      <td>${actualStudent.Apellidos}</td>
+                      <td>${actualStudent.Nombre}</td>
+                      <td>${actualStudent.PeriodoIngreso}</td>
+                      <td>${actualStudent.AñoIngreso}</td>
+                      <td>${actualStudent.seguimiento.metodo.nombre}</td>
+                      <td>${actualStudent.PeriodoTitulación}</td>
+                      <td>${actualStudent.AñoTitulación}</td>
+                      <td>${actualStudent.seguimiento.actoProtocolario}</td>
+                      <td>${actualStudent.SemestresCursados}</td>
+                  </tr>`;
+
+        }
+
+        //Cerrar ultima tabla
+        html+= "</table>";
+        //insertar en html
+        $('.contenedor-de-tablas').append(html);
+
+      //$('tbody').html(data);
       }
-      });
+
+    });
 
   });
 
