@@ -1,7 +1,7 @@
 @extends('students.index')
-@section('title', 'Nuevo')
+@section('title', '- Nuevo')
 @section('content2')
-  @include('common.errors')
+@include('common.errors')
 
   {{-- @if(\Session::has('success'))
     <div class="alert alert-success">

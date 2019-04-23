@@ -1,5 +1,5 @@
 @extends('students.index')
-@section('title', 'Estadística')
+@section('title', '- Estadística')
 @section('content2')
 
 

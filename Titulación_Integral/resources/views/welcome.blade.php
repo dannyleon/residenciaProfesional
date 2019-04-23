@@ -4,13 +4,15 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Titulación Integral</title>
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <title> Titulación Integral @yield('title')</title>
+
+        <!-- ESTILOS Y SCRIPTS CREADOS AUTOMATICAMENTE PARA LOGIN DE USUARIOS -->
 
         <!-- Scripts -->
-        <script src="{{ asset('js/app.js') }}"></script>
-
-        <script src="{{asset('https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')}}"></script>
-        <script src="{{asset('http://code.jquery.com/ui/1.11.0/jquery-ui.js')}}"></script>
+        <script src="{{ asset('js/app.js') }}" defer></script>
 
         <!-- Fonts -->
         <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -19,92 +21,38 @@
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-        {{-- CDN LINK PARA ICONOS fontawesome  --}}
+        <!-- MIS ESTILOS Y LINKS -->
+
+         <!-- CDN link para iconos fontawesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+
         <link rel="stylesheet" href="/css/normalize.css">
         <link rel="stylesheet" href="/css/misEstilos.css">
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-
-        </style>
     </head>
 
-    <body>
-            @auth
-                @yield('content')
-            @else
-              <div class="flex-center position-ref full-height">
-              @if (Route::has('login'))
-                  <div class="top-right links">
-                      @auth
-                          <a href="{{ url('/home') }}">Home</a>
-                      @else
-                          <a href="{{ route('login') }}">Login</a>
+  <body>
 
-                          @if (Route::has('register'))
-                              <a href="{{ route('register') }}">Registrar</a>
-                          @endif
-                      @endauth
-                  </div>
+        @auth
+          @yield('content')
+
+          @else
+          <div class="flex-center position-ref full-height">
+
+              @if (Route::has('login'))
+                <div class="top-right links">
+                  {{-- <a href="{{ url('/home') }}">Home</a> --}}
+                  {{-- <a href="{{ route('register') }}">Registrar</a> --}}
+                  <a href="{{ route('login') }}">Ingresar</a>
+                </div>
               @endif
+
               <div class="content">
+
                   <div class="title m-b-md">
                       Titulación Integral
                   </div>
@@ -128,7 +76,7 @@
 
                   </div>
               </div>
-            </div>
-            @endauth
+          </div>
+        @endauth
     </body>
 </html>
