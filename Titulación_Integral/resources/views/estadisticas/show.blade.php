@@ -1,25 +1,31 @@
-@extends('layouts.app')
+@extends('students.index')
 @section('title', 'Estadística')
-@section('content')
+@section('content2')
 
-  <br>
-<div class="input-group" align="center">
-     <select id="periodoTIT" class="form-control" style="max-width:25%;">
-       <option disabled selected>Período Escolar</option>
-       <option value="1"> ENERO-JUNIO </option>
-       <option value="2"> AGOSTO-DICIEMBRE </option>
-     </select>
-    &nbsp;&nbsp; * &nbsp;&nbsp;
-    <div class="col-xs-3">
-      <input type="number" id="añoTIT" class="form-control" placeholder="Año">
-    </div>
-    &nbsp;&nbsp;  &nbsp;&nbsp;
-    <button type="submit" class="btn btn-primary" id="mostrar">Mostrar</button>
-    &nbsp;&nbsp;  &nbsp;&nbsp;
-    <button type="submit" class="btn btn-primary" id="imprimir">Imprimir</button>
+
+<section class="no-margin">
+
+<div class="contenedor-campos">
+  <div class="campo">
+    <select id="periodoTIT" class="form-control">
+      <option disabled selected>Período Escolar</option>
+      <option value="1"> ENERO-JUNIO </option>
+      <option value="2"> AGOSTO-DICIEMBRE </option>
+    </select>
+  </div>
+
+  <div class="campo">
+    <input type="number" id="añoTIT" class="form-control" placeholder="Año">
+  </div>
 </div>
 
-<br><br>
+
+<div class="enviar">
+  <button type="submit" class="btn btn-primary" id="mostrar">Mostrar</button>
+  <button type="submit" class="btn btn-primary" id="imprimir">Imprimir</button>
+</div>
+
+</section>
 
 <div class="container">
   <div class="row">
@@ -46,6 +52,7 @@
           <tbody>
           </tbody>
       </table> --}}
+
       </div>
     </div>
     </div>

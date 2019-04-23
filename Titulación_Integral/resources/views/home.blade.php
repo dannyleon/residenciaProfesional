@@ -1,6 +1,7 @@
+{{-- @extends('layouts.app') --}}
 @extends('welcome')
-@section('content')
-  
+
+<body>
   <header class="site-header">
     <div class="contenedor contenido-header">
       <div class="barra">
@@ -57,6 +58,7 @@
             </li>
         @endguest
     </ul>
+
   </nav>
 </div>
 
@@ -73,7 +75,7 @@
     {{-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button> --}}
   </form>
 
-  @yield('content2')
-
+  @yield('content')
 </main>
-@endsection
+
+</body>

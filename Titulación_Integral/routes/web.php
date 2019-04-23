@@ -32,3 +32,7 @@ Route::get('/estadistica', 'EstadisticaController@view')->name('estadistica.view
 Route::any('/search','searchController@buscar');
 
 Route::get('/titulados', 'EstadisticaController@search');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

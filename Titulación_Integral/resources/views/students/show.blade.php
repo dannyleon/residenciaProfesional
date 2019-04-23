@@ -1,8 +1,7 @@
+@extends('students.index')
+@section('title', 'Estudiante')
 
-@extends('layouts.app')
-@section('title', 'Students')
-@section('content')
-
+@section('content2')
 <br>
 @if ($message = Session::get('success'))
   <div class="alert alert-success">
@@ -69,7 +68,6 @@
     <a href="/students/{{$student->id}}/edit" id="buttonEdit" class="btn btn-primary" style="float:right; margin:5px;">Editar</a>
 
 
-
     {{-- <form class="" action={{action('StudentController@destroy', $student->id)}} method="post">
       @method('DELETE')
       @csrf --}}
@@ -84,12 +82,15 @@
 </div>
 @endsection
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="{{asset('https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')}}"></script>
+<script src="{{asset('http://code.jquery.com/ui/1.11.0/jquery-ui.js')}}"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script type="text/javascript">
 
 $(document).ready(function(){
+
+  console.log("ready!")
 
   var student_id = $("#student_id").val();
 
@@ -143,6 +144,12 @@ $(document).ready(function(){
 
   $(document).on('change', '.datepicker', function(){
 
+    console.log("updating...")
+
+    console.log("checking ui,", jQuery.ui)
+
+    console.log($("#autRegistro").datepicker({ dateFormat: 'dd,mm,yyyy' }).val())
+
     var autRegistro = $("#autRegistro").datepicker({ dateFormat: 'dd,mm,yyyy' }).val();
     var recibido = $("#recibido").datepicker({ dateFormat: 'dd,mm,yyyy' }).val();
     var liberación = $("#liberación").datepicker({ dateFormat: 'dd,mm,yyyy' }).val();
@@ -184,6 +191,8 @@ $(document).ready(function(){
 
 
   $(document).on('click', '#update', function(){
+
+  console.log("on update click")
 
   var autRegistro = $("#autRegistro").datepicker({ dateFormat: 'dd,mm,yyyy' }).val();
   var recibido = $("#recibido").datepicker({ dateFormat: 'dd,mm,yyyy' }).val();
