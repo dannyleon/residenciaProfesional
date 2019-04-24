@@ -1,13 +1,13 @@
 @extends('students.index')
-@section('title', 'Estudiante')
-
+@section('title', '- Estudiante')
 @section('content2')
-<br>
+
 @if ($message = Session::get('success'))
   <div class="alert alert-success">
     <p>{{$message}}</p>
   </div>
 @endif
+
 <div id="message"> </div>
 <div class="card">
   {{-- <div class="card-header">
@@ -31,7 +31,7 @@
       @endforeach</p>
     <br>
 
-      <div class="">
+      <div>
         <div class="table-responsive">
           <table id="editable_table" class="table table-bordered table-striped">
             <thead>
@@ -51,7 +51,7 @@
             </table>
             {{ csrf_field() }}
         </div>
-        <button class="btn btn-success btn-xs" style="display:none;" id="update" >Actualizar</button>
+        <button class="btn btn-success btn-xs" style="display:none;" id="update">Actualizar</button>
     </div>
 
     <br>
@@ -67,14 +67,7 @@
 
     <a href="/students/{{$student->id}}/edit" id="buttonEdit" class="btn btn-primary" style="float:right; margin:5px;">Editar</a>
 
-
-    {{-- <form class="" action={{action('StudentController@destroy', $student->id)}} method="post">
-      @method('DELETE')
-      @csrf --}}
-      <button type="submit" class="btn btn-danger text center" id="buttonDelete" style="float:right; margin:5px;">Borrar</button>
-    {{-- </form> --}}
-
-
+    <button type="submit" class="btn btn-danger text center" id="buttonDelete" style="float:right; margin:5px;">Borrar</button>
 
 
   </div>
@@ -85,6 +78,7 @@
 <script src="{{asset('https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')}}"></script>
 <script src="{{asset('http://code.jquery.com/ui/1.11.0/jquery-ui.js')}}"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 <script type="text/javascript">
 

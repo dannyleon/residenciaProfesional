@@ -2,7 +2,6 @@
 @section('title', '- Estadística')
 @section('content2')
 
-
 <section class="no-margin">
 
 <div class="contenedor-campos">
@@ -12,7 +11,7 @@
       <option value="1"> ENERO-JUNIO </option>
       <option value="2"> AGOSTO-DICIEMBRE </option>
     </select>
-  </div>
+</div>
 
   <div class="campo">
     <input type="number" id="añoTIT" class="form-control" placeholder="Año">

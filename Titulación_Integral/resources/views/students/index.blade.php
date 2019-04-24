@@ -27,8 +27,22 @@
     <a href="{{route('estadistica.view')}}">Estadística</a>
     <a href="#">Documentos</a>
 
-    <!-- Right Side Of Navbar -->
-    <ul class="navbar-nav">
+    <div class="dropdown">
+
+      <a href="#" onclick="myFunction()" class="dropbtn">{{ Auth::user()->name }} <i class="fa fa-caret-down"></i></a>
+
+      <div id="myDropdown" class="dropdown-content">
+        <a id="salir" href="{{ route('logout') }}"  onclick= "event.preventDefault();
+                      document.getElementById('logout-form').submit();"> {{ __('Salir') }} </a>
+
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+      </div>
+    </div>
+
+    {{-- <!-- Right Side Of Navbar -->
+     <ul class="navbar-nav">
         <!-- Authentication Links -->
         @guest
             <li class="nav-item">
@@ -41,16 +55,17 @@
             </li>
 
         @else
-            <li class="nav-item dropdown">
+             <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                     {{ Auth::user()->name }} <span class="caret"></span>
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
                     <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault();
                                      document.getElementById('logout-form').submit();">
-                        {{ __('Salir') }} 
+                        {{ __('Salir') }}
                     </a>
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -59,7 +74,7 @@
                 </div>
             </li>
         @endguest
-    </ul>
+    </ul> --}}
 
     <form id="searchForm" action="{{URL::to('/search')}}" method="post" role="search">
       @csrf
@@ -73,3 +88,33 @@
   @yield('content2')
 </main>
 @endsection
+
+<script type="text/javascript">
+
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+var form = document.getElementById("logout-form");
+
+document.getElementById("salir").addEventListener("click", function () {
+  form.submit();
+});
+
+</script>
