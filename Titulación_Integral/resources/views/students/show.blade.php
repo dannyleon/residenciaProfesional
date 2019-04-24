@@ -2,17 +2,18 @@
 @section('title', '- Estudiante')
 @section('content2')
 
-@if ($message = Session::get('success'))
-  <div class="alert alert-success">
-    <p>{{$message}}</p>
-  </div>
-@endif
+<div class="contenedor">
+  @if ($message = Session::get('success'))
+    <div class="alert alert-success">
+      <p>{{$message}}</p>
+    </div>
+  @endif
 
-<div id="message"> </div>
-<div class="card">
-  {{-- <div class="card-header">
-    SEGUIMIENTO
-  </div> --}}
+  <div id="message"> </div>
+</div>
+
+<div class="card contenedor">
+
   <div class="card-body">
     <input type="hidden" id="student_id" value="{{ $student->id }}">
     <h5 class="card-title">{{$student->Apellidos}} {{$student->Nombre}} </h5>

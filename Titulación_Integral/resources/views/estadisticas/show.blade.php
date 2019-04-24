@@ -2,7 +2,10 @@
 @section('title', '- Estadística')
 @section('content2')
 
-<section class="no-margin">
+
+<section class=" contenedor">
+
+  <h1>Estadística</h1>
 
 <div class="contenedor-campos">
   <div class="campo">

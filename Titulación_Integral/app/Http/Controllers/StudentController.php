@@ -110,7 +110,7 @@ class StudentController extends Controller
 
         $seguimiento->save();
 
-        return redirect()->route('students.index')->with('success','Alumno Añadido');
+        return redirect()->route('students.show', compact('student'))->with('success','Alumno Añadido');
 
     }
 

@@ -84,7 +84,7 @@
   </nav>
 </div>
 
-<main class="contenedor contenido-main">
+<main class="contenido-main">
   @yield('content2')
 </main>
 @endsection

@@ -143,7 +143,10 @@ form#searchForm {
 .contenido-main {
   background-color: #f6f8fa;
   padding: 25px 25px;
+}
 
+.contenido-main h1 {
+  text-align: center;
 }
 
 .enlace {

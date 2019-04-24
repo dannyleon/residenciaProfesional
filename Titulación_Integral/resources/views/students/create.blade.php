@@ -3,11 +3,8 @@
 @section('content2')
 @include('common.errors')
 
-  {{-- @if(\Session::has('success'))
-    <div class="alert alert-success">
-      <p>{{\Session::get('success')}}</p>
-    </div>
-  @endif --}}
+
+<h1>Añadir Alumno</h1>
 
 <section class="no-margin contacto contenido-centrado">
   <form class="form-group" method="POST" action="/students"  enctype="multipart/form-data">
