@@ -83,9 +83,9 @@
 
 
 
-        <div class="campo">
+        <div class="campo campo-periodo">
           <label for="periodo">Periodo de Ingreso:</label><br>
-          <input type="number" name="periodoIngreso" id="periodo" min="1" max="2" required>
+          <input type="number" name="periodoIngreso" id="periodo" min="1" max="2" placeholder="1 ó 2"required>
         </div>
 
         <div class="campo w-100">

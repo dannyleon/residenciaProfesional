@@ -35,6 +35,7 @@
         <a id="salir" href="{{ route('logout') }}"  onclick= "event.preventDefault();
                       document.getElementById('logout-form').submit();"> {{ __('Salir') }} </a>
 
+
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
@@ -75,12 +76,14 @@
             </li>
         @endguest
     </ul> --}}
+    <div class="busqueda">
+      <form id="searchForm" action="{{URL::to('/search')}}" method="post" role="search">
+        @csrf
+        <input class="form-control mr-sm-2" type="text" placeholder="Buscar Alumno" aria-label="Search" name="q">
+        {{-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button> --}}
+      </form>
+    </div>
 
-    <form id="searchForm" action="{{URL::to('/search')}}" method="post" role="search">
-      @csrf
-      <input class="form-control mr-sm-2" type="text" placeholder="Buscar Alumno" aria-label="Search" name="q">
-      {{-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button> --}}
-    </form>
   </nav>
 </div>
 

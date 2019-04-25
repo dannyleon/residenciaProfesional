@@ -92,7 +92,7 @@
 
 
 
-        <div class="campo">
+        <div class="campo campo-periodo">
           <label for="periodo">Periodo de Ingreso:</label><br>
           <input value="{{$student->PeriodoIngreso}}" type="number" name="periodoIngreso" id="periodo" min="1" max="2" required>
         </div>

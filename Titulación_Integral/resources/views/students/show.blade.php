@@ -8,38 +8,41 @@
       <p>{{$message}}</p>
     </div>
   @endif
-
   <div id="message"> </div>
 </div>
 
-<div class="card contenedor">
+<div class="card  contenedor contenedor-card">
 
-  <div class="card-body">
+  <div class="card-body tarjeta">
     <input type="hidden" id="student_id" value="{{ $student->id }}">
-    <h5 class="card-title">{{$student->Apellidos}} {{$student->Nombre}} </h5>
 
-    <p class="card-text">
-      {{$student->Correo}}
-      &nbsp;&nbsp; * &nbsp;&nbsp;
-      {{$student->carrera->nombre}}
-      &nbsp;&nbsp; * &nbsp;&nbsp;
-      {{$student->seguimiento->metodo->nombre}}
-      &nbsp;&nbsp; * &nbsp;&nbsp;
+    <div class="encabezado">
+      <h2 class="card-title no-margin"> {{$student->Apellidos}} {{$student->Nombre}} </h2>
+      <div class="botones-seguimiento">
+        <a href="/students/{{$student->id}}/edit" class="btn btn-primary">Editar</a>
+        <button type="submit" class="btn btn-danger eliminar" id="buttonDelete">Eliminar</button>
+        <button class="btn btn-success btn-xs actualizar" style="display:none;" id="update">Actualizar</button>
+      </div>
+    </div>
 
-       @foreach ($student->telefonos as $telefono)
-        {{$telefono->numeroTel}}
-        &nbsp;&nbsp; * &nbsp;&nbsp;
-      @endforeach</p>
-    <br>
+    <div class="card-text datos">
+      <p>{{$student->Correo}}</p>
+      <p class = "capitalize" >{{$student->carrera->nombre}}</p>
+      <p class="capitalize">{{$student->seguimiento->metodo->nombre}}</p>
 
-      <div>
+      @foreach ($student->telefonos as $telefono)
+       <p>{{$telefono->numeroTel}}</p>
+      @endforeach
+    </div>
+
+    <div class="fechas">
         <div class="table-responsive">
-          <table id="editable_table" class="table table-bordered table-striped">
+          <table id="editable_table" class="table">
             <thead>
               <tr>
                 <th>Autorización de Registro</th>
                 <th>Recibido en Titulación</th>
-                <th>Liberación de proyecto</th>
+                <th>Liberación de Proyecto</th>
                 <th>Solicitud de Fecha</th>
                 <th>Acto Protocolario</th>
                 <th>Status</th>
@@ -49,37 +52,40 @@
 
             </tbody>
 
-            </table>
+          </table>
             {{ csrf_field() }}
         </div>
-        <button class="btn btn-success btn-xs" style="display:none;" id="update">Actualizar</button>
+
     </div>
 
-    <br>
-    <div class="cajaObservaciones">
-      <div class="tituloObservaciones">
-        <p>Observaciones</p>
+  <div class="contenedor-cajas">
+
+    <div class="caja caja-observaciones">
+      <div class="titulo">
+        <p class="no-margin">Observaciones</p>
       </div>
-      <br>
-      <div>
+
+      <div class="textarea">
         <textarea placeholder= "Escriba Algo" id="observaciones"></textarea>
       </div>
     </div>
 
-    <a href="/students/{{$student->id}}/edit" id="buttonEdit" class="btn btn-primary" style="float:right; margin:5px;">Editar</a>
-
-    <button type="submit" class="btn btn-danger text center" id="buttonDelete" style="float:right; margin:5px;">Borrar</button>
-
+    <div class="caja caja-documentos">
+      <div class="titulo">
+        <p class="no-margin">Documentos</p>
+      </div>
+    </div>
 
   </div>
 
-</div>
+  </div> <!-- card-body -->
+</div> <!-- card -->
 @endsection
+
 
 <script src="{{asset('https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')}}"></script>
 <script src="{{asset('http://code.jquery.com/ui/1.11.0/jquery-ui.js')}}"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
 
 <script type="text/javascript">
 
@@ -118,7 +124,7 @@ $(document).ready(function(){
       html += '<td> <input type="date" class="datepicker" name="liberación" id="liberación" value="'+response.liberación+'">  </td>';
       html += '<td> <input type="date" class="datepicker" name="solicitudActo" id="solicitudActo" value="'+response.solicitudActo+'">  </td>';
       html += '<td> <input type="date" class="datepicker" name="actoProtocolario" id="actoProtocolario" value="'+response.actoProtocolario+'">  </td>';
-      html += '<td> '+ response.status +'  </td>';
+      html += '<td class="status"> '+ response.status +'  </td>';
 
 
       $('tbody').html(html);
