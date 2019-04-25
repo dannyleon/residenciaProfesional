@@ -1,4 +1,4 @@
-@extends('students.index')
+@extends('students.inicio')
 @section('title', '- Nuevo')
 @section('content2')
 @include('common.errors')
@@ -17,7 +17,7 @@
 
         <div class="campo w-100">
           <label for="numeroControl">No.Control:</label>
-          <input type="number" name="numeroControl" id="numeroControl" class="form-control" required>
+          <input type="number" name="numeroControl" id="numeroControl" class="form-control"  required>
         </div>
 
         <div class="campo">
@@ -122,4 +122,11 @@
   </form>
 </section>
 
-@endsection
+<script type="text/javascript">
+
+window.onload = function() {
+  document.getElementById("numeroControl").focus();
+}
+
+</script>
+@stop

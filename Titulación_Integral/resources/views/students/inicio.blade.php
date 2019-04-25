@@ -81,7 +81,6 @@
         @csrf
         <input id="buscar"class="form-control mr-sm-2" type="text" placeholder="Buscar Alumno" aria-label="Search" name="q">
         {{-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button> --}}
-
       </form>
     </div>
 
@@ -89,28 +88,7 @@
 </div>
 
 <main class="contenido-main">
-
-    <div id="contenedor-busqueda" class="contenedor-busqueda">
-
-      <div>
-        <p class="titulo-p no-margin">Titulación Integral</p>
-      </div>
-
-      <div class="busquedaInicio contenedor">
-        <form class="searchForm"id="searchForm" action="{{URL::to('/search')}}" method="post" role="search">
-          @csrf
-
-          <div class="inputWhitButton">
-            <input id="buscar-p" class="form-control " type="text" placeholder="Buscar alumno..." aria-label="Search" name="q">
-
-            <button type="submit"> <i class="fas fa-search"> </i> </button>
-          </div>
-
-        </form>
-      </div>
-
-    </div>
-
+  @yield('content2')
 </main>
 
 @endsection

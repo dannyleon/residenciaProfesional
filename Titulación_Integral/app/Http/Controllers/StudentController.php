@@ -24,6 +24,8 @@ class StudentController extends Controller
       $student = Student::with('carrera','telefonos','seguimiento')->get();
 
       return view("students.index", compact('student'));
+
+      // return redirect()->route('students.index', compact('student'))->with('success');
     }
 
     /**

@@ -1,4 +1,4 @@
-@extends('students.index')
+@extends('students.inicio')
 @section('title', '- Estudiante')
 @section('content2')
 
