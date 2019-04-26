@@ -45,7 +45,6 @@ img {
 }
 
 
-
 /** Utilidades **/
 .no-margin {
   margin: 0;
@@ -79,6 +78,10 @@ img {
   font-weight: bold;
 }
 
+.white {
+  background-color: white;
+}
+
 /** Página de Inicio **/
 .full-height {
     height: 100vh;
@@ -96,8 +99,8 @@ img {
 
 .top-right {
     position: absolute;
-    right: 10px;
-    top: 18px;
+    right: 30px;
+    top: 20px;
 }
 
 .content {
@@ -131,7 +134,7 @@ img {
   background-color: white;
 }
 
-.contenido-header{
+.contenido-header {
   height: 100%;
   display: flex;
   justify-content: center;
@@ -359,6 +362,11 @@ label {
 
 .enviar a {
   margin-left: 1rem;
+  background-color: #ff3f57;
+}
+
+.enviar a:hover {
+  background-color: #dc3348;
 }
 
 

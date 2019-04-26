@@ -1,23 +1,27 @@
 @extends('welcome')
 @section('content')
 
-<header class="site-header">
-    <div class="contenedor contenido-header">
-      <div class="barra">
-        <div class="imagen">
-          <img src="/imagenes/perfil_sep.jpg">
-        </div>
 
-        <div class="imagen">
-          <img src="/imagenes/TecNaMe.png">
-        </div>
+    <header class="site-header">
+        <div class="contenedor contenido-header">
+          <div class="barra">
+            <div class="imagen">
+              <img src="/imagenes/perfil_sep.jpg">
+            </div>
 
-        <div class="imagen">
-          <img src="/imagenes/Logo_ITT.png">
+            <div class="imagen">
+              <img src="/imagenes/TecNaMe.png">
+            </div>
+
+            <div class="imagen">
+              <img src="/imagenes/Logo_ITT.png">
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-</header>
+    </header>
+
+
+
 
 <div class="barra-navegacion">
   <nav class="navegacion-principal">
