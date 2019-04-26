@@ -29,31 +29,12 @@
 
 </section>
 
-<div class="container">
+<div class="contenedor">
   <div class="row">
     <div class="panel panel-default">
       <div class="panel-body">
         <div class="contenedor-de-tablas">
 
-        {{-- <table class="table table-bordered table-hover">
-          <thead>
-            <tr>
-            <th>No.Control</th>
-            <th>Apellidos</th>
-            <th>Nombre</th>
-            <th>PeriodoIngreso</th>
-            <th>AñoIngreso</th>
-            <th>Proyecto</th>
-            <th>PeriodoTIT</th>
-            <th>AñoTIT</th>
-            <th>FechaTIT</th>
-            <th>Semestres Cursados</th>
-            <th>Carrera</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-      </table> --}}
 
       </div>
     </div>
@@ -66,7 +47,6 @@
 <script type="text/javascript">
 
 $('#imprimir').on('click',function(){
-
   window.print();
 });
 
@@ -88,6 +68,7 @@ $('#imprimir').on('click',function(){
       url : '{{URL::to('/titulados')}}',
       data:{ periodoTIT:periodoTIT, añoTIT:añoTIT },
       success:function(data){
+
         $('.contenedor-de-tablas').empty();
 
         console.log(data);
@@ -96,15 +77,20 @@ $('#imprimir').on('click',function(){
         var hombres = 0
         var mujeres = 0
 
+        //variables para contar hombres, mujeres y el total de un periodo determinado
+        var hombresTotal = 0
+        var mujeresTotal = 0
+        var totalPeriodo = 0
+
         var html = `<div class="panel-heading">
-                      <h4>Alumnos Titulados </h4>
-                      <h6>${periodoLetra} ${añoTIT}</h6>
+                      <h2 class="bold">Alumnos Titulados </h2>
+                      <h4>${periodoLetra} ${añoTIT}</h4>
                       <br>
                     </div>`;
 
 
-        var inicioTabla = '<table class="table table-bordered table-hover">';
-        var carreraActualTitulo = `<h6>${data[0].carrera.nombre}</h6>`;
+        var carreraActualTitulo = `<h4 class="capitalize titulo-color">${data[0].carrera.nombre}</h4>`;
+        var inicioTabla = '<table class="table table-hover">';
         var cabecera = `<tr>
         <th>No.Control</th>
         <th>Apellidos</th>
@@ -126,15 +112,21 @@ $('#imprimir').on('click',function(){
         var actualCarrera = data[0].carrera.nombre;
 
         for ( var key in data) {
+
           var actualStudent = data[key]
 
-          if(actualStudent.carrera.nombre != actualCarrera){
+          if(actualStudent.carrera.nombre != actualCarrera) {
 
             actualCarrera = actualStudent.carrera.nombre;
-            carreraActualTitulo = `<h6>${actualStudent.carrera.nombre}</h6>`;
+            carreraActualTitulo = `<h4 class="capitalize titulo-color">${actualStudent.carrera.nombre}</h4>`;
 
-            var suma = mujeres + hombres
+            var suma = mujeres + hombres;
+
+            //sumatoria de titulados el periodo seleccionado
+            totalPeriodo += suma;
+
             html+=`
+
             <tr>
               <td>Hombres: ${hombres}</td>
               <td>Mujeres: ${mujeres}</td>
@@ -143,12 +135,13 @@ $('#imprimir').on('click',function(){
 
             //cerrar tabla actual
             html+="</table>";
+
             //reiniciar contadores de mujeres y hombres
             hombres = 0;
             mujeres = 0;
 
             //crear nueva tabla
-            html+='<table class="table table-bordered table-hover">';
+            html+='<table class="table table-hover">';
             //repetir cabecera
             html += cabecera;
             html += carreraActualTitulo;
@@ -156,9 +149,16 @@ $('#imprimir').on('click',function(){
 
           if (actualStudent.Sexo == 'hombre'){
             hombres++
+            hombresTotal += hombres;
           } else {
             mujeres++
+            mujeresTotal += mujeres;
           }
+
+
+
+
+
 
           //datos del alumno
           html+= `<tr>
@@ -174,9 +174,13 @@ $('#imprimir').on('click',function(){
                       <td>${actualStudent.SemestresCursados}</td>
                   </tr>`;
 
-        }
+        } //cierre ciclo
 
         var suma = mujeres + hombres
+
+        //sumatoria de titulados el periodo seleccionado
+        totalPeriodo += suma;
+
         html+=`
         <tr>
           <td>Hombres: ${hombres}</td>
@@ -186,6 +190,15 @@ $('#imprimir').on('click',function(){
 
         //Cerrar ultima tabla
         html+= "</table>";
+
+        html+= `
+        <p> Total Hombres: ${hombresTotal} </p>
+        <p> Total Mujeres: ${mujeresTotal} </p>
+        <p> Total Periodo: ${totalPeriodo} </p>`
+
+        hombresTotal = 0;
+        mujeresTotal = 0;
+        totalPeriodo = 0;
 
         //insertar en html
         $('.contenedor-de-tablas').append(html);
