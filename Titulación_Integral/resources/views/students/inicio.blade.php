@@ -1,7 +1,13 @@
 @extends('welcome')
 @section('content')
 
+  @if(Session::has('alert'))
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+    <script>
+        swal("No se Encuentra el Alumno", "Intente buscar por Número de Control ó Apellidos Completos");
+    </script>
+  @endif
     <header class="site-header">
         <div class="contenedor contenido-header">
           <div class="barra">
@@ -26,14 +32,14 @@
 <div class="barra-navegacion">
   <nav class="navegacion-principal">
 
-    <a href="{{route('students.index')}}" >TitIntegral</a>
-    <a  href="{{route('students.create')}}">Añadir Alumno</a>
-    <a href="{{route('estadistica.view')}}">Estadística</a>
-    <a href="#">Documentos</a>
+    <a href="{{route('students.index')}}" > <i class="fas fa-graduation-cap"></i> Titulación</a>
+    <a  href="{{route('students.create')}}"> <i class="fas fa-plus-circle"></i>Añadir Alumno</a>
+    <a href="{{route('estadistica.view')}}"> <i class="fas fa-table"></i>Estadística</a>
+    <a href="#"> <i class="fas fa-file-alt"></i> Documentos</a>
 
     <div class="dropdown">
 
-      <a href="#" onclick="myFunction()" class="dropbtn">{{ Auth::user()->name }} <i class="fa fa-caret-down"></i></a>
+      <a href="#" onclick="myFunction()" class="dropbtn"> <i class="fas fa-user-friends"></i> {{ Auth::user()->name }} <i class="fa fa-caret-down"></i></a>
 
       <div id="myDropdown" class="dropdown-content">
         <a id="salir" href="{{ route('logout') }}"  onclick= "event.preventDefault();

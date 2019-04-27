@@ -23,7 +23,9 @@ class searchController extends Controller
       if(count($student) > 0)
           return view('students.show', compact('student'));
           //return view('students.show')->withDetails($student)->withQuery ( $q );
-          else return "No lo encontré! :(";
+          else return redirect()->back()->with('alert', 'No se encuentra');
+          // return redirect()->back()->with('alert', 'Deleted!');
+
 
       //else return view ('welcome')->withMessage('No Details found. Try to search again !');
     }

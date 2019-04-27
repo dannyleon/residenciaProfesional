@@ -30,8 +30,12 @@ class EstadisticaController extends Controller
         ->get();
 
 
-        $sortedStudents = $students->sortBy('Carrera_id')->values();
-        return Response($sortedStudents);
+
+        if(count($students) > 0)
+        {
+          $sortedStudents = $students->sortBy('Carrera_id')->values();
+          return Response($sortedStudents);
+        }
 
 
         // if($sortedStudents)

@@ -2,8 +2,17 @@
 @section('title', '- Estadística')
 @section('content2')
 
+  @if(Session::has('alert2'))
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script>
+        swal("No hay Alumnos Titulados en este Periodo y Año", "Agregue otro periodo y año");
+    </script>
+  @endif
 
 <section class=" contenedor">
+
+
 
   <h1>Estadística</h1>
 
@@ -69,6 +78,7 @@ $('#imprimir').on('click',function(){
       data:{ periodoTIT:periodoTIT, añoTIT:añoTIT },
       success:function(data){
 
+      
         $('.contenedor-de-tablas').empty();
 
         console.log(data);

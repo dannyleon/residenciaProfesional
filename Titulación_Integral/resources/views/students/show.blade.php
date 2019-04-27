@@ -4,12 +4,13 @@
 
 <div class="contenedor">
   @if ($message = Session::get('success'))
-    <div class="alert alert-success">
+    <div id id="popo"class="alert alert-success">
       <p>{{$message}}</p>
     </div>
   @endif
   <div id="message"> </div>
 </div>
+
 
 <div class="card  contenedor contenedor-card">
 
@@ -18,12 +19,20 @@
 
     <div class="encabezado">
       <h2 class="card-title no-margin"> {{$student->Apellidos}} {{$student->Nombre}} </h2>
+
       <div class="botones-seguimiento">
+
+        <!-- Condición para restrigir funciones de editar y eliminar al asistente del coordinador-->
+        @if(Auth::user()->name == 'Coordinador')
         <a href="/students/{{$student->id}}/edit" class="btn btn-primary">Editar</a>
         <button type="submit" class="btn btn-danger eliminar" id="buttonDelete">Eliminar</button>
+        @endif
+
         <button class="btn btn-success btn-xs actualizar" style="display:none;" id="update">Actualizar</button>
       </div>
+
     </div>
+
 
     <div class="card-text datos">
       <p>{{$student->Correo}}</p>
@@ -90,6 +99,7 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
+
 
   console.log("ready!")
 

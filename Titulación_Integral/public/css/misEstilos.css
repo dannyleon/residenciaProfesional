@@ -82,6 +82,10 @@ img {
   background-color: white;
 }
 
+.blue {
+  color: #006cab;
+}
+
 /** Página de Inicio **/
 .full-height {
     height: 100vh;
@@ -100,7 +104,7 @@ img {
 .top-right {
     position: absolute;
     right: 30px;
-    top: 20px;
+    top: 30px;
 }
 
 .content {
@@ -114,11 +118,15 @@ img {
 .links > a {
     color: #636b6f;
     padding: 0 25px;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 600;
     letter-spacing: .1rem;
     text-decoration: none;
     text-transform: uppercase;
+}
+
+.links > a:hover {
+  color:#006cab;
 }
 
 .m-b-md {
@@ -166,6 +174,18 @@ form#searchForm {
   object-fit:scale-down;
 }
 
+.barra-welcome .imagen {
+  flex-basis: 33.3%;
+}
+
+.barra-welcome {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  width: 80%;
+}
+
 
 .contenido-main {
   padding: 25px 25px;
@@ -203,6 +223,10 @@ form#searchForm {
   display: inline-block;
   text-align: center;
   padding: 5px;
+}
+
+.navegacion-principal i {
+  margin-right: .5rem;
 }
 
 .navegacion-principal a:hover {
@@ -357,7 +381,7 @@ label {
 .enviar{
   display: flex;
   justify-content: flex-end;
-  margin-top: 2rem;
+  margin-top: 3rem;
 }
 
 .enviar a {

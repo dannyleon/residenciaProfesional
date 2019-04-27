@@ -50,6 +50,7 @@
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
         ]
+
     },
     "config": {
         "preferred-install": "dist",

@@ -52,13 +52,13 @@
 
               <div class="content">
 
-                  <div class="title m-b-md">
+                  <div class="title">
                       Titulación Integral
                   </div>
 
                   <div class="site-header">
                     <div class="contenido-header">
-                      <div class="barra">
+                      <div class="barra-welcome">
                         <div class="imagen">
                           <img src="/imagenes/perfil_sep.jpg">
                         </div>
