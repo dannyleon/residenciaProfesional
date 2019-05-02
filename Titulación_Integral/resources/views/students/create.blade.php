@@ -44,12 +44,12 @@
 
         <div class="campo">
           <label for="tel2">Telefono(2):</label>
-          <input type="text" name="tel2" id="tel2" class="form-control" required>
+          <input type="text" name="tel2" id="tel2" class="form-control" placeholder="Opcional" >
         </div>
 
         <div class="campo">
           <label for="tel3">Telefono(3):</label>
-          <input type="text"  name="tel3" id="tel3" class="form-control" required>
+          <input type="text"  name="tel3" id="tel3" class="form-control" placeholder="Opcional" >
         </div>
 
         <div class="campo">

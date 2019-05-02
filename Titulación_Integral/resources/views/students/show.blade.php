@@ -36,8 +36,8 @@
 
     <div class="card-text datos">
       <p>{{$student->Correo}}</p>
-      <p class = "capitalize" >{{$student->carrera->nombre}}</p>
-      <p class="capitalize">{{$student->seguimiento->metodo->nombre}}</p>
+      <p>{{$student->carrera->nombre}}</p>
+      <p>{{$student->seguimiento->metodo->nombre}}</p>
 
       @foreach ($student->telefonos as $telefono)
        <p>{{$telefono->numeroTel}}</p>
@@ -83,6 +83,10 @@
       <div class="titulo">
         <p class="no-margin">Documentos</p>
       </div>
+
+      <div class="contenedor-documentos">
+        <a href="documentos/{{$student->id}}/pruebahtml">PruebaDocumento HTML</a>
+      </div>
     </div>
 
   </div>
@@ -98,10 +102,8 @@
 
 <script type="text/javascript">
 
+
 $(document).ready(function(){
-
-
-  console.log("ready!")
 
   var student_id = $("#student_id").val();
 
@@ -150,6 +152,7 @@ $(document).ready(function(){
 
    });
   }
+
 
   var _token = $('input[name="_token"]').val();
 

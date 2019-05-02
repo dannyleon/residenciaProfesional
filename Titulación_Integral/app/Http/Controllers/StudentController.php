@@ -61,8 +61,8 @@ class StudentController extends Controller
         'periodoIngreso' => 'required|numeric|digits:1',
         'sexo' => 'required|max:191',
         'tel1' => 'required|max:191',
-        'tel2' => 'required|max:191',
-        'tel3' => 'required|max:191',
+        'tel2' => 'max:191',
+        'tel3' => 'max:191',
         'metodo' => 'required',
         'autoResgistro' => 'required',
         'recibido' => 'required',
@@ -83,23 +83,47 @@ class StudentController extends Controller
         $student->save();
 
         //Guardar tabla telefonos
-        $phone = new Telefono();
+        if($request->input('tel1')){
+          $phone = new Telefono();
+          $phone->student_id = $student->id;
+          $phone->numeroTel = $request->input('tel1');
+          $phone->save();
+        }
+        else {
+          $phone = new Telefono();
+          $phone->student_id = $student->id;
+          $phone->numeroTel = "";
+          $phone->save();
+        }
 
-        $phone->student_id = $student->id;
-        $phone->numeroTel = $request->input('tel1');
-        $phone->save();
 
-        $phone = new Telefono();
+        if($request->input('tel2')){
+          $phone = new Telefono();
+          $phone->student_id = $student->id;
+          $phone->numeroTel = $request->input('tel2');
+          $phone->save();
+        }
+        else {
+          $phone = new Telefono();
+          $phone->student_id = $student->id;
+          $phone->numeroTel = "";
+          $phone->save();
+        }
 
-        $phone->student_id = $student->id;
-        $phone->numeroTel = $request->input('tel2');
-        $phone->save();
 
-        $phone = new Telefono();
+        if($request->input('tel3')){
+          $phone = new Telefono();
+          $phone->student_id = $student->id;
+          $phone->numeroTel = $request->input('tel3');
+          $phone->save();
+        }
+        else {
+          $phone = new Telefono();
+          $phone->student_id = $student->id;
+          $phone->numeroTel = "";
+          $phone->save();
+        }
 
-        $phone->student_id = $student->id;
-        $phone->numeroTel = $request->input('tel3');
-        $phone->save();
 
         //Guardar tabla seguimientos
         $seguimiento = new Seguimiento();
@@ -163,8 +187,8 @@ class StudentController extends Controller
       'periodoIngreso' => 'required|numeric|digits:1',
       'sexo' => 'required|max:191',
       'tel1' => 'required|max:191',
-      'tel2' => 'required|max:191',
-      'tel3' => 'required|max:191',
+      'tel2' => 'max:191',
+      'tel3' => 'max:191',
       'metodo' => 'required',
       'autoResgistro' => 'required',
       'recibido' => 'required',
@@ -191,17 +215,41 @@ class StudentController extends Controller
         'numeroTel'=>$request->input('tel1')
       ]);
 
-      $phone_id=  $student->telefonos[1]->idTelefono;
-      $phone = Telefono::where('idTelefono',$phone_id)
-      ->update([
-        'numeroTel'=>$request->input('tel2')
-      ]);
 
-      $phone_id=  $student->telefonos[2]->idTelefono;
-      $phone = Telefono::where('idTelefono',$phone_id)
-      ->update([
-        'numeroTel'=>$request->input('tel3')
-      ]);
+      if($request->input('tel2')){
+
+        $phone_id=  $student->telefonos[1]->idTelefono;
+        $phone = Telefono::where('idTelefono',$phone_id)
+        ->update([
+
+          'numeroTel'=>$request->input('tel2')
+        ]);
+      }
+      else {
+
+        $phone_id=  $student->telefonos[1]->idTelefono;
+        $phone = Telefono::where('idTelefono',$phone_id)
+        ->update([
+
+          'numeroTel'=> ''
+        ]);
+      }
+
+      if($request->input('tel3')){
+
+        $phone_id=  $student->telefonos[2]->idTelefono;
+        $phone = Telefono::where('idTelefono',$phone_id)
+        ->update([
+          'numeroTel'=>$request->input('tel3')
+        ]);
+      }
+      else {
+        $phone_id=  $student->telefonos[2]->idTelefono;
+        $phone = Telefono::where('idTelefono',$phone_id)
+        ->update([
+          'numeroTel'=> ''
+        ]);
+      }
 
 
       $seguimiento = Seguimiento::where('id',$student->id)

@@ -18,7 +18,6 @@ Route::get('/', function () {
 });
 
 Route::resource('students','StudentController');
-
 //Route::post('/search', 'searchController@search');
 
 Route::get('fetch_data/{id}','ajaxController@fetch_data');
@@ -36,3 +35,7 @@ Route::get('/titulados', 'EstadisticaController@search');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/documentos','documentosController@mostar')->name('documentos.view');
+
+Route::get('documentos/{id}/pruebahtml','documentosController@prueba')->name('documentos.prueba');

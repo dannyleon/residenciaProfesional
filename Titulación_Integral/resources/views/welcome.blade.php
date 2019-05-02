@@ -32,6 +32,15 @@
         <link rel="stylesheet" href="/css/normalize.css">
         <link rel="stylesheet" href="/css/misEstilos.css">
 
+        <style type="text/css">
+
+          @media print
+            {
+              .noprint {display:none;}
+            }
+
+        </style>
+
     </head>
 
   <body>

@@ -40,20 +40,37 @@
           <input value="{{$student->Correo}}" type="email" name="correo" id="correo" placeholder="correo@dominio.com" class="form-control" required>
         </div>
 
+
         <div class="campo">
           <label for="tel1">Telefono(1):</label>
-          <input value="{{$student->telefonos[0]->numeroTel}}" type="text"  name="tel1" id="tel1" class="form-control" required>
+          @if($student->telefonos[0]->numeroTel != '')
+            <input value="{{$student->telefonos[0]->numeroTel}}" type="text"  name="tel1" id="tel1" class="form-control" required>
+
+
+          @else
+          <input value="" type="text"  name="tel1" id="tel1" class="form-control" required>
+          @endif
         </div>
 
 
         <div class="campo">
           <label for="tel2">Telefono(2):</label>
-          <input value="{{$student->telefonos[1]->numeroTel}}" type="text" name="tel2" id="tel2" class="form-control" required>
+          @if ($student->telefonos[1]->numeroTel != '')
+            <input value="{{$student->telefonos[1]->numeroTel}}" type="text" name="tel2" id="tel2" class="form-control" placeholder="Opcional">
+
+          @else
+          <input value="" type="text" name="tel2" id="tel2" class="form-control" placeholder="Opcional">
+          @endif
         </div>
 
         <div class="campo">
           <label for="tel3">Telefono(3):</label>
-          <input value="{{$student->telefonos[2]->numeroTel}}" type="text"  name="tel3" id="tel3" class="form-control" required>
+          @if ($student->telefonos[2]->numeroTel != '')
+            <input value="{{$student->telefonos[2]->numeroTel}}" type="text"  name="tel3" id="tel3" class="form-control" placeholder="Opcional">
+
+          @else
+            <input value="" type="text" name="tel3" id="tel3" class="form-control" placeholder="Opcional">
+          @endif
         </div>
 
         <div class="campo">

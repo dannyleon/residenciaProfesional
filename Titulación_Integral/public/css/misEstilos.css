@@ -137,7 +137,7 @@ img {
 /** Header **/
 .site-header {
   padding: 10px 0 10px 0;
-  margin-top: 10px;
+  /* margin-top: 10px; */
   height: 100px;
   background-color: white;
 }
@@ -562,12 +562,25 @@ label {
   background-color: #015f96;
 }
 
-
-
 .table {
   width: 100%;
   margin-bottom: 2.5rem;
   background-color: transparent;
+}
+
+.totalTitulados {
+  display: flex;
+}
+
+.totalTitulados p {
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+
+.totalCarrera td {
+  font-weight: bold;
+
 }
 
 

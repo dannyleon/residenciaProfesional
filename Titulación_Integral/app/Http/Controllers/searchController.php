@@ -19,6 +19,7 @@ class searchController extends Controller
     public function buscar()
     {
       $q = Input::get ( 'q' );
+
       $student = Student::where('NoControl','LIKE','%'.$q.'%')->orWhere('Apellidos','LIKE','%'.$q.'%')->first();
       if(count($student) > 0)
           return view('students.show', compact('student'));

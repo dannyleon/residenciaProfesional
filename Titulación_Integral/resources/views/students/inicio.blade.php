@@ -3,11 +3,11 @@
 
   @if(Session::has('alert'))
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
     <script>
         swal("No se Encuentra el Alumno", "Intente buscar por Número de Control ó Apellidos Completos");
     </script>
   @endif
+
     <header class="site-header">
         <div class="contenedor contenido-header">
           <div class="barra">
@@ -29,7 +29,7 @@
 
 
 
-<div class="barra-navegacion">
+<div class="barra-navegacion noprint">
   <nav class="navegacion-principal">
 
     <a href="{{route('students.index')}}" > <i class="fas fa-graduation-cap"></i> Titulación</a>
@@ -105,10 +105,6 @@
 
 <script type="text/javascript">
 
-window.onload = function() {
-  document.getElementById("buscar-p").focus();
-};
-
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
 function myFunction() {
@@ -132,7 +128,9 @@ window.onclick = function(event) {
 var form = document.getElementById("logout-form");
 
 document.getElementById("salir").addEventListener("click", function () {
+
   form.submit();
+
 });
 
 
