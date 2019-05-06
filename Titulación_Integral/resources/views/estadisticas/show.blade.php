@@ -14,27 +14,40 @@
 
 
 
-  <h1>Estadística</h1>
+      <h1>Estadística</h1>
 
-<div class="contenedor-campos noprint">
-  <div class="campo">
-    <select id="periodoTIT" class="form-control">
-      <option disabled selected>Período Escolar</option>
-      <option value="1"> ENERO-JUNIO </option>
-      <option value="2"> AGOSTO-DICIEMBRE </option>
-    </select>
-</div>
+    <div class="contenedor-campos noprint">
+      <div class="campo">
+        <select id="periodoTIT" class="form-control">
+          <option disabled selected>Período Escolar</option>
+          <option value="1"> ENERO-JUNIO </option>
+          <option value="2"> AGOSTO-DICIEMBRE </option>
+          <option value="3"> AÑO COMPLETO </option>
+        </select>
+    </div>
 
-  <div class="campo">
-    <input type="number" id="añoTIT" class="form-control" placeholder="Año">
-  </div>
-</div>
+      <div class="campo">
+        <input type="number" id="añoTIT" class="form-control" placeholder="Año">
+      </div>
+
+      <div class="campo">
+        {{-- <label for="carrera">Carrera:</label> --}}
+        <select name="carrera" id="carrera" class="form-control">
+          <option value="">Selecciona una Carrera</option>
+          <option value="0"> TODAS LAS CARRERAS </option>
+          @foreach ($carrera as $carrera => $value)
+          <option value="{{ $carrera }}"> {{ $value }} </option>
+          @endforeach
+        </select>
+      </div>
+
+    </div>
 
 
-<div class="enviar noprint">
-  <button type="submit" class="btn btn-primary" id="mostrar">Mostrar</button>
-  <button type="submit" class="btn btn-primary" id="imprimir" >Imprimir</button>
-</div>
+    <div class="enviar noprint">
+      <button type="submit" class="btn btn-primary" id="mostrar">Mostrar</button>
+      <button type="submit" class="btn btn-primary" id="imprimir" >Imprimir</button>
+    </div>
 
 </section>
 
@@ -95,21 +108,32 @@ input2.addEventListener("keyup", function(event) {
   $('#mostrar').on('click',function()
   {
 
-    var e = document.getElementById("periodoTIT");
-    var periodoTIT = e.options[e.selectedIndex].value;
+    var p = document.getElementById("periodoTIT");
+    var c = document.getElementById("carrera");
+
+    var periodoTIT = p.options[p.selectedIndex].value;
+    var carrera = c.options[c.selectedIndex].value;
     var añoTIT = $("#añoTIT").val();
 
-    if(periodoTIT == 1)
-    {
-      var periodoLetra = "Enero-Junio";
-    }else {
+    var periodoLetra = "";
+
+    if(periodoTIT == 1){
+      periodoLetra = "Enero-Junio";
+
+    }else if (periodoTIT == 2) {
       periodoLetra = "Agosto-Diciembre";
+
+    }else{
+      periodoLetra = "Enero-Junio, Agosto-Diciembre";
+
     }
+
+
 
     $.ajax({
       type: "GET",
       url : '{{URL::to('/titulados')}}',
-      data:{ periodoTIT:periodoTIT, añoTIT:añoTIT },
+      data:{ periodoTIT:periodoTIT, añoTIT:añoTIT, carrera:carrera },
       success:function(data){
 
         console.log(data);
@@ -118,7 +142,6 @@ input2.addEventListener("keyup", function(event) {
 
           $('.contenedor-de-tablas').empty();
 
-          console.log(data);
 
           //variables para contar hombres y mujeres de cada carrera
           var hombres = 0;
@@ -260,7 +283,7 @@ input2.addEventListener("keyup", function(event) {
 
 
         }else {
-          swal("No hay Alumnos Titulados en este Periodo y Año", "Agregue otro periodo/año");
+          swal("No hay alumnos titulados con los parametros seleccionados", "Agregue otra información");
         }
 
     } //cierre succes function
