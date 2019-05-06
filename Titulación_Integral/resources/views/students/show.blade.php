@@ -23,7 +23,7 @@
       <div class="botones-seguimiento">
 
         <!-- Condición para restrigir funciones de editar y eliminar al asistente del coordinador-->
-        @if(Auth::user()->name == 'Coordinador')
+        @if(Auth::user()->name == 'Coordinador Titulación')
         <a href="/students/{{$student->id}}/edit" class="btn btn-primary">Editar</a>
         <button type="submit" class="btn btn-danger eliminar" id="buttonDelete">Eliminar</button>
         @endif

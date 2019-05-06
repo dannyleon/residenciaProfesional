@@ -148,7 +148,7 @@ input2.addEventListener("keyup", function(event) {
           <th>PeriodoTIT</th>
           <th>AñoTIT</th>
           <th>FechaTIT</th>
-          <th>Semestres Cursados</th>
+          <th>Semestres desde Ingreso hasta Titulación</th>
           </tr>`;
 
           //cabecera de la tabla
@@ -246,7 +246,7 @@ input2.addEventListener("keyup", function(event) {
           <div class ="totalTitulados">
             <p> Total Hombres: ${hombresTotal} </p>
             <p> Total Mujeres: ${mujeresTotal} </p>
-            <p> Total Periodo: ${totalPeriodo} </p>
+            <p> Total: ${totalPeriodo} </p>
           </div>`
 
           hombresTotal = 0;

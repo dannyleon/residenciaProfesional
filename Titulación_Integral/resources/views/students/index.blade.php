@@ -8,7 +8,7 @@
     <script>
         swal("No se Encuentra el Alumno", "Intente buscar por Número de Control ó Apellidos Completos");
     </script>
-    
+
   @endif
 
 

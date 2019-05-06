@@ -53,8 +53,7 @@
 
               @if (Route::has('login'))
                 <div class="top-right links">
-                  {{-- <a href="{{ url('/home') }}">Home</a> --}}
-                  {{-- <a href="{{ route('register') }}">Registrar</a> --}}
+                  <a href="{{ route('register') }}">Registrar</a>
                   <a href="{{ route('login') }}">Ingresar</a>
                 </div>
               @endif
