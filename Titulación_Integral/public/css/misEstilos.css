@@ -330,6 +330,12 @@ form#searchForm {
 }
 
 /** Formulario para nuevo alumno **/
+.form-group{
+  border-style:solid;
+  border-color: #e2e2e2;
+  border-width: thin;
+  padding: 1rem;
+}
 .contenedor-campos {
     display: flex;
     justify-content: space-between;
@@ -340,6 +346,14 @@ form#searchForm {
   display: inline-block;
   flex: 0 0 calc(33.3% - 1rem);
   margin-top: .5rem;
+}
+
+.campo-radio input {
+  margin-right: .25rem;
+}
+
+.campo-radio label{
+  margin-right: .7rem;
 }
 
 .campoFecha {
@@ -552,15 +566,55 @@ label {
 }
 
 /** Estadística **/
+.enviar-estadistica {
+  margin-top: 0;
+}
+
 .enviar button {
   background-color: #006cab;
   border: none;
-  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.enviar button:last-of-type {
+  margin-right: 0;
 }
 
 .enviar button:hover {
   background-color: #015f96;
 }
+
+.barra-herramientas {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.67em 0;
+}
+
+.barra-herramientas h1{
+  margin: 0;
+}
+
+.opciones-graficas{
+  font-size: 16px;
+}
+
+.opciones-graficas label{
+  margin-right: .7rem;
+}
+
+.opciones-graficas input{
+  margin-right: .25rem;
+}
+
+.opciones-graficas label:last-of-type{
+  margin: 0;
+}
+
+.contenedor-de-tablas{
+  margin-top: 3rem;
+}
+
 
 .table {
   width: 100%;
@@ -581,6 +635,10 @@ label {
 .totalCarrera td {
   font-weight: bold;
 
+}
+
+.contenedor canvas {
+  margin-top: 3rem;
 }
 
 

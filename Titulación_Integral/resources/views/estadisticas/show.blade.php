@@ -13,16 +13,35 @@
 <section class=" contenedor">
 
 
+  <div class="barra-herramientas noprint">
 
-      <h1>Estadística</h1>
+    <div class="opciones-graficas">
+      <label class="bold">Opciones de Gráficas:</label>
+
+      <label class="radio-inline"><input type="radio" name="tipoGrafica" value="bar" id="graficaBarras" checked>Barras</label>
+      <label class="radio-inline"><input type="radio" name="tipoGrafica" value="pie" id="graficaPastel">Pastel</label>
+
+    </div>
+
+    <h1>Estadística</h1>
+
+    <div class="enviar enviar-estadistica noprint">
+      <button type="submit" class="btn btn-primary" id="mostrar">Generar Tabla</button>
+      <button type="submit" class="btn btn-primary" id="mostrarGrafica">Mostrar Gráfica</button>
+      <button type="submit" class="btn btn-primary" id="ocultar" onclick="ocultarGrafica()" ><i class="fas fa-minus-circle"></i></button>
+      <button type="submit" class="btn btn-primary" id="imprimir" ><i class="fas fa-print"></i></button>
+    </div>
+
+  </div>
 
     <div class="contenedor-campos noprint">
       <div class="campo">
         <select id="periodoTIT" class="form-control">
           <option disabled selected>Período Escolar</option>
+          <option value="3"> AÑO COMPLETO </option>
           <option value="1"> ENERO-JUNIO </option>
           <option value="2"> AGOSTO-DICIEMBRE </option>
-          <option value="3"> AÑO COMPLETO </option>
+
         </select>
     </div>
 
@@ -43,15 +62,11 @@
 
     </div>
 
-
-    <div class="enviar noprint">
-      <button type="submit" class="btn btn-primary" id="mostrar">Mostrar</button>
-      <button type="submit" class="btn btn-primary" id="imprimir" >Imprimir</button>
-    </div>
+    <canvas class="contenedor-grafica" id="myChart"></canvas>
 
 </section>
 
-<div class="contenedor" >
+<div class="contenedor">
   <div class="row">
     <div class="panel panel-default">
       <div class="panel-body">
@@ -67,42 +82,244 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<!-- CDN myChartjs-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+
+
 <script type="text/javascript">
 
+  $('#imprimir').on('click',function(){
+    window.print();
+  });
 
+  // Get the input field
+  var input = document.getElementById("añoTIT");
+  var input2 = document.getElementById("periodoTIT");
 
-$('#imprimir').on('click',function(){
+  // Execute a function when the user releases a key on the keyboard
+  input.addEventListener("keyup", function(event) {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+      // Cancel the default action, if needed
+      event.preventDefault();
+      // Trigger the button element with a click
+      document.getElementById('mostrar').click();
+    }
 
-  window.print();
+  });
 
-});
+  input2.addEventListener("keyup", function(event) {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+      // Cancel the default action, if needed
+      event.preventDefault();
+      // Trigger the button element with a click
+      document.getElementById('mostrar').click();
+    }
+  });
 
-// Get the input field
-var input = document.getElementById("añoTIT");
-var input2 = document.getElementById("periodoTIT");
+  var canvas = document.getElementById("myChart");
+  var ocultar = document.getElementById("ocultar");
+  ocultar.style.display = "none";
+  canvas.style.display = "none";
 
-// Execute a function when the user releases a key on the keyboard
-input.addEventListener("keyup", function(event) {
-  // Number 13 is the "Enter" key on the keyboard
-  if (event.keyCode === 13) {
-    // Cancel the default action, if needed
-    event.preventDefault();
-    // Trigger the button element with a click
-    document.getElementById('mostrar').click();
+  function ocultarGrafica() {
+    document.getElementById("myChart").style.display = "none";
+    $('#ocultar').fadeOut();
   }
 
-});
 
-input2.addEventListener("keyup", function(event) {
-  // Number 13 is the "Enter" key on the keyboard
-  if (event.keyCode === 13) {
-    // Cancel the default action, if needed
-    event.preventDefault();
-    // Trigger the button element with a click
-    document.getElementById('mostrar').click();
-  }
+  $('#mostrarGrafica').on('click',function(){
 
-});
+      canvas.style.display = "block";
+      $('#ocultar').fadeIn();
+
+      var p = document.getElementById("periodoTIT");
+      var c = document.getElementById("carrera");
+
+      var tipoGrafica = document.querySelector('input[name="tipoGrafica"]:checked').value;
+
+      var periodoTIT = p.options[p.selectedIndex].value;
+      var carrera = c.options[c.selectedIndex].value;
+      var añoTIT = $("#añoTIT").val();
+
+      var periodoLetra = "";
+
+      if(periodoTIT == 1){
+        periodoLetra = "Enero-Junio ";
+
+      }else if (periodoTIT == 2) {
+        periodoLetra = "Agosto-Diciembre ";
+
+      }else {
+        periodoLetra = "";
+
+      }
+
+
+      $.ajax({
+        type: "GET",
+        url : '{{URL::to('/GraficaTitulados')}}',
+        data:{ periodoTIT:periodoTIT, añoTIT:añoTIT, carrera:carrera },
+        success:function(data){
+
+          console.log(data);
+
+          var myChart = document.getElementById('myChart').getContext('2d');
+
+          //Estilos y opciones Globales
+          Chart.defaults.global.defaultFontFamily = 'Lato';
+          // Chart.defaults.global.defaultFontSize = 16;
+          Chart.defaults.global.defaultFontColor = '#777';
+
+          //Si la grafica de es Barras
+          if(tipoGrafica =='bar'){
+
+            if(window.bar != undefined)
+              window.bar.destroy();
+              window.bar = new Chart(myChart, {
+                type:tipoGrafica, //bar,horizontalBar, pie, line, doughnut
+                data:{
+                  labels:data.carreras,
+                  datasets:[{
+                    label:'Titulados',
+                    data:data.cantidadTitulados,
+                    backgroundColor:[
+
+                      'rgba(255,99,132,0.6)',
+                      'rgba(54,162,235,0.6)',
+                      'rgba(255,206,86,0.6)',
+                      'rgba(75,192,192,0.6)',
+                      'rgba(153,102,255,0.6)',
+                      'rgba(255,159,64,0.6)',
+                      'rgba(255,99,132,0.6)',
+
+                      'rgba(255,99,132,0.6)',
+                      'rgba(54,162,235,0.6)',
+                      'rgba(255,206,86,0.6)',
+                      'rgba(75,192,192,0.6)',
+                      'rgba(153,102,255,0.6)',
+                      'rgba(255,159,64,0.6)',
+                      'rgba(255,99,132,0.6)',
+
+                      'rgba(255,99,132,0.6)',
+                      'rgba(54,162,235,0.6)',
+                      'rgba(255,206,86,0.6)',
+                      'rgba(75,192,192,0.6)',
+                      'rgba(153,102,255,0.6)',
+                      'rgba(255,159,64,0.6)',
+
+                    ],
+                    borderWidth:1,
+                    borderColor:'#777',
+                    hoverBorderColor:'#000'
+                  }],
+                },
+                options:{
+
+                  title:{
+                    display:true,
+                    text:'Alumnos Titulados en '+ periodoLetra + añoTIT,
+                    fontSize:25
+                  },
+                  legend:{
+                    position:'right'
+                  },
+                  layout:{
+
+                  },
+                  tooltips:{
+                    enabled:true,
+                  },
+                  scales:{
+                    yAxes:[{
+                      ticks:{
+                        min:0,
+                        max: data.max
+                      }
+                    }]
+                  }
+
+
+                }
+
+              });//Cierre grafica de barras FIX
+
+          }//Cierre if grafica es Barra
+
+          //Si es Grafica de Pastel
+          else {
+
+            if(window.bar != undefined)
+              window.bar.destroy();
+              window.bar = new Chart(myChart, {
+                type:tipoGrafica, //bar,horizontalBar, pie, line, doughnut
+                data:{
+                  labels:data.carreras,
+                  datasets:[{
+                    label:'Titulados',
+                    data:data.cantidadTitulados,
+                    backgroundColor:[
+
+                      'rgba(255,99,132,0.6)',
+                      'rgba(54,162,235,0.6)',
+                      'rgba(255,206,86,0.6)',
+                      'rgba(75,192,192,0.6)',
+                      'rgba(153,102,255,0.6)',
+                      'rgba(255,159,64,0.6)',
+                      'rgba(255,99,132,0.6)',
+
+                      'rgba(255,99,132,0.6)',
+                      'rgba(54,162,235,0.6)',
+                      'rgba(255,206,86,0.6)',
+                      'rgba(75,192,192,0.6)',
+                      'rgba(153,102,255,0.6)',
+                      'rgba(255,159,64,0.6)',
+                      'rgba(255,99,132,0.6)',
+
+                      'rgba(255,99,132,0.6)',
+                      'rgba(54,162,235,0.6)',
+                      'rgba(255,206,86,0.6)',
+                      'rgba(75,192,192,0.6)',
+                      'rgba(153,102,255,0.6)',
+                      'rgba(255,159,64,0.6)',
+
+                    ],
+                    borderWidth:1,
+                    borderColor:'#777',
+                    hoverBorderColor:'#000'
+                  }],
+                },
+                options:{
+
+                  title:{
+                    display:true,
+                    text:'Alumnos Titulados en '+ periodoLetra + añoTIT,
+                    fontSize:25
+
+                  },
+                  legend:{
+                    position:'right'
+                  },
+                  layout:{
+
+                  },
+                  tooltips:{
+                    enabled:true,
+                  }
+                }
+
+              });//Cierre grafica de barras FIX
+
+          }
+
+        }//cierre success
+
+      });//cierra ajax
+
+  }); //cierre mostrarGrafica
+
 
 
   $('#mostrar').on('click',function()
@@ -123,8 +340,8 @@ input2.addEventListener("keyup", function(event) {
     }else if (periodoTIT == 2) {
       periodoLetra = "Agosto-Diciembre";
 
-    }else{
-      periodoLetra = "Enero-Junio, Agosto-Diciembre";
+    }else {
+      periodoLetra = "";
 
     }
 
@@ -171,7 +388,7 @@ input2.addEventListener("keyup", function(event) {
           <th>PeriodoTIT</th>
           <th>AñoTIT</th>
           <th>FechaTIT</th>
-          <th>Semestres desde Ingreso hasta Titulación</th>
+          <th>Semestres hasta Titulación</th>
           </tr>`;
 
           //cabecera de la tabla

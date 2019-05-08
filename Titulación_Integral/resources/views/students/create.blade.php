@@ -52,10 +52,12 @@
           <input type="text"  name="tel3" id="tel3" class="form-control" placeholder="Opcional" >
         </div>
 
-        <div class="campo">
-          <label for="">Sexo:</label><br>
-          <input type="radio" name="sexo" value="hombre" checked required> Hombre <br>
-          <input type="radio" name="sexo" value="mujer"> Mujer <br>
+        <div class="campo campo-radio">
+          <label for="">Sexo:</label>
+
+          <label class="radio-inline"><input type="radio" name="sexo" value="hombre" checked required>Hombre</label>
+          <label class="radio-inline"><input type="radio" name="sexo" value="mujer" checked required>Mujer</label>
+
         </div>
 
       </div>
