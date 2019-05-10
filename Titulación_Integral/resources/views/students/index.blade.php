@@ -36,7 +36,7 @@
     <a href="{{route('students.index')}}" > <i class="fas fa-graduation-cap"></i> Titulación</a>
     <a  href="{{route('students.create')}}"> <i class="fas fa-plus-circle"></i>Añadir Alumno</a>
     <a href="{{route('estadistica.view')}}"> <i class="fas fa-table"></i>Estadística</a>
-    <a href="#"> <i class="fas fa-file-alt"></i> Documentos</a>
+    <a href="{{route('viewfile')}}"> <i class="fas fa-file-alt"></i> Documentos</a>
 
     <div class="dropdown">
 

@@ -38,6 +38,12 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/documentos','documentosController@mostar')->name('documentos.view');
+// Route::get('/documentos','documentosController@mostar')->name('documentos.view');
+//
+// Route::get('documentos/{id}/pruebahtml','documentosController@prueba')->name('documentos.prueba');
 
-Route::get('documentos/{id}/pruebahtml','documentosController@prueba')->name('documentos.prueba');
+Route::get('/file', 'FileController@mostrarDocumentos')->name('viewfile');
+
+Route::get('/file/upload', 'FileController@nuevoDocumento')->name('formfile');
+
+Route::post('/file/upload', 'FileController@guardarDocumento')->name('uploadfile');
