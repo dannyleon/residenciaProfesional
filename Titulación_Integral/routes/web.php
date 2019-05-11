@@ -47,3 +47,7 @@ Route::get('/file', 'FileController@mostrarDocumentos')->name('viewfile');
 Route::get('/file/upload', 'FileController@nuevoDocumento')->name('formfile');
 
 Route::post('/file/upload', 'FileController@guardarDocumento')->name('uploadfile');
+
+Route::delete('/file/{id}', 'FileController@delete')->name('deletefile');
+
+Route::get('/file/download/{id}', 'FileController@download')->name('downloadfile');
