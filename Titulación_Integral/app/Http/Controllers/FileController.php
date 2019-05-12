@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use TitIntegral\File;
 use Illuminate\Support\Facades\Storage;
 
+
 class FileController extends Controller
 {
     public function mostrarDocumentos()
@@ -27,7 +28,15 @@ class FileController extends Controller
 
       $files = $request->file('file');
 
+
+
+
       foreach ($files as $file) {
+
+        if(preg_match('/[^\x20-\x7f]/', $file->getClientOriginalName()))
+        {
+          return "El titulo del documento contiene caracteres especiales";
+        }
         File::create([
           'titulo' => $file->getClientOriginalName(),
           'path' => $file->store('public/storage')
@@ -47,6 +56,7 @@ class FileController extends Controller
 
     public function download($id)
     {
+
       $dl = File::find($id);
       return Storage::download($dl->path,$dl->titulo);
     }

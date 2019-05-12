@@ -85,7 +85,13 @@
       </div>
 
       <div class="contenedor-documentos">
-        <a href="documentos/{{$student->id}}/pruebahtml">PruebaDocumento HTML</a>
+        <ul class="documentos">
+
+          @foreach($files as $file)
+            <li><i class="far fa-file-alt"></i><a href="{{route('downloadfile',$file->id)}}">{{ $file->titulo }}</a></li>
+          @endforeach
+
+        </ul>
       </div>
     </div>
 

@@ -17,7 +17,8 @@
     @foreach($files as $file)
     <div class="col-md-4">
       <div class="card">
-        <img src="{{ Storage::url($file->path)}}" alt="imagen" class="card-img-top">
+        {{-- <img src="{{ Storage::url($file->path)}}" alt="imagen" class="card-img-top"> --}}
+        <img src="/imagenes/word-document-icon-8.jpg" alt="Icono Documento" class="card-img-top">
         <div class="card-body">
           <strong class="card-title">{{ $file->titulo }}</strong>
           <p class="card-text">{{ $file->created_at->diffForHumans() }}</p>

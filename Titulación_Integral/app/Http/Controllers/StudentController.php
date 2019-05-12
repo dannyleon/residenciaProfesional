@@ -8,6 +8,7 @@ use TitIntegral\Carrera;
 use TitIntegral\Metodo;
 use TitIntegral\Seguimiento;
 use TitIntegral\Estado;
+use TitIntegral\File;
 
 use Illuminate\Http\Request;
 
@@ -148,8 +149,8 @@ class StudentController extends Controller
      */
     public function show(Request $request, Student $student)
     {
-      //  $student = Student::where('NoControl', $NoControl )->firstOrFail();
       return view('students.show', compact('student'));
+
     }
 
     /**
