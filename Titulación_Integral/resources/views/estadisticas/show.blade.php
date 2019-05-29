@@ -4,14 +4,12 @@
 
   @if(Session::has('alert2'))
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
     <script>
-        swal("No hay Alumnos Titulados en este Periodo y Año", "Agregue otro periodo y año");
+        swal("No hay Alumnos Titulados en este Periodo y Año", "Agregue otro periodo y año", "error");
     </script>
   @endif
 
 <section class=" contenedor">
-
 
   <div class="barra-herramientas noprint">
 
@@ -28,8 +26,9 @@
     <div class="enviar enviar-estadistica noprint">
       <button type="submit" class="btn btn-primary" id="mostrar">Generar Tabla</button>
       <button type="submit" class="btn btn-primary" id="mostrarGrafica">Mostrar Gráfica</button>
-      <button type="submit" class="btn btn-primary" id="ocultar" onclick="ocultarGrafica()" ><i class="fas fa-minus-circle"></i></button>
-      <button type="submit" class="btn btn-primary" id="imprimir" ><i class="fas fa-print"></i></button>
+      <button type="submit" class="btn btn-primary" id="ocultar" title="Ocultar Gráfica"onclick="ocultarGrafica()" ><i class="fas fa-minus-circle"></i></button>
+      <button type="submit" class="btn btn-primary" id="imprimir" title="Imprimir"><i class="fas fa-print"></i></button>
+      <button type="submit" class="btn btn-primary" id="exportarExcel" title="Expotar Excel" ><i class="fas fa-file-excel"></i></button>
     </div>
 
   </div>
@@ -129,6 +128,40 @@
     $('#ocultar').fadeOut();
   }
 
+  $('#exportarExcel').on('click',function(){
+
+    var p = document.getElementById("periodoTIT");
+    var c = document.getElementById("carrera");
+
+    var periodoTIT = p.options[p.selectedIndex].value;
+    var carrera = c.options[c.selectedIndex].value;
+    var añoTIT = $("#añoTIT").val();
+
+    var periodoLetra = "";
+
+    if(periodoTIT == 1){
+      periodoLetra = "Enero-Junio ";
+
+    }else if (periodoTIT == 2) {
+      periodoLetra = "Agosto-Diciembre ";
+
+    }else {
+      periodoLetra = "";
+    }
+
+    $.ajax({
+      type: "GET",
+      url : '{{URL::to('/export/xlsx')}}',
+      data:{ periodoTIT:periodoTIT, añoTIT:añoTIT, carrera:carrera },
+      success:function(data){
+
+        console.log(data);
+
+      }
+
+    });
+
+  });//Cierre exportarExcel
 
   $('#mostrarGrafica').on('click',function(){
 
@@ -320,8 +353,6 @@
 
   }); //cierre mostrarGrafica
 
-
-
   $('#mostrar').on('click',function()
   {
 
@@ -342,10 +373,7 @@
 
     }else {
       periodoLetra = "";
-
     }
-
-
 
     $.ajax({
       type: "GET",
@@ -500,7 +528,7 @@
 
 
         }else {
-          swal("No hay alumnos titulados con los parametros seleccionados", "Agregue otra información");
+          swal("No hay Alumnos Titulados con los Parámetros Seleccionados", "Alimente otros datos","warning");
         }
 
     } //cierre succes function

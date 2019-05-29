@@ -67,7 +67,7 @@ img {
   font-size: 50px;
 }
 
- .titulo-color {
+.titulo-color {
   text-transform: uppercase;
   color: #006cab;
   font-size: 18px;
@@ -84,6 +84,17 @@ img {
 
 .blue {
   color: #006cab;
+}
+
+.miBoton-primario {
+  background-color: #006cab;
+  border-color: #006cab;
+  margin-right: .5rem;
+}
+
+.miBoton-eliminar {
+  background-color: #ff3f57;
+  border-color: #ff3f57;
 }
 
 /** Página de Inicio **/
@@ -336,10 +347,62 @@ form#searchForm {
   border-width: thin;
   padding: 1rem;
 }
+
 .contenedor-campos {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.nav-create {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nav-create h1::after {
+  content: "";
+  display: block;
+  width: 11.5rem;
+  height: .15rem;
+  background-color: #1AC4A2;
+  margin-top:.25rem;
+}
+
+.nav-edit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.linea_baja::after {
+  content: "";
+  display: block;
+  width: 10.3rem;
+  height: .15rem;
+  background-color: #1AC4A2;
+  margin-top:.25rem;
+}
+
+.regresar {
+  display: flex;
+  align-items: center;
+}
+.regresar a {
+  text-decoration: none;
+  color: #006cab;
+  font-weight:normal;
+}
+
+.regresar i {
+  color: #006cab;
+  font-size: 22px;
+  margin-right: .5rem;
+
+}
+
+.regresar a:hover {
+  color: #00a2ff;
+
 }
 
 .campo {
@@ -392,7 +455,7 @@ label {
   flex: 0 0 100%;
 }
 
-.enviar{
+.enviar {
   display: flex;
   justify-content: flex-end;
   margin-top: 3rem;
@@ -406,6 +469,7 @@ label {
 .enviar a:hover {
   background-color: #dc3348;
 }
+
 
 
 /** Seguimiento de Alumno **/
@@ -431,11 +495,16 @@ label {
 }
 
 .botones-seguimiento a {
-  padding: 2px 20px;
-  background-color: #006cab;
+  /* padding: 2px 20px; */
+  /* background-color: #006cab; */
   border: none;
   margin-right: 5px;
 
+}
+
+.botones-seguimiento i {
+  color:#006cab;
+  font-size: 26px;
 }
 .botones-seguimiento .eliminar{
   background-color: #ff3f57;
@@ -445,11 +514,13 @@ label {
 
 .botones-seguimiento .actualizar {
   padding: 3px 20px;
+  margin-right: 1rem;
   border: none;
 }
 
-.botones-seguimiento a:hover {
-  background-color: #015f96;
+.botones-seguimiento i:hover {
+  color: #00a2ff;
+  border-color: #00a2ff;
 }
 
 .botones-seguimiento .eliminar:hover {
@@ -463,7 +534,7 @@ label {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin-top: .75rem;
+  margin-top: 1rem;
 
 }
 
@@ -503,9 +574,6 @@ label {
 .card-body{
   position: relative;
 }
-
-
-
 
 
 /**Observaciones y Documentos**/
@@ -600,7 +668,7 @@ label {
 }
 
 .enviar button:hover {
-  background-color: #015f96;
+  background-color: #00a2ff;
 }
 
 .barra-herramientas {
@@ -612,6 +680,15 @@ label {
 
 .barra-herramientas h1{
   margin: 0;
+}
+
+.barra-herramientas h1::after{
+  content: "";
+  display: block;
+  width: 9rem;
+  height: .15rem;
+  background-color: #1AC4A2;
+  margin-top:.25rem;
 }
 
 .opciones-graficas{
@@ -672,6 +749,56 @@ label {
   margin-right: auto;
   width: 20%;
 }
+
+.agregar-doc {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: .75rem;
+  align-content: center;
+  padding: .5rem;
+}
+
+.titulo-doc {
+  text-align: center;
+}
+
+.titulo-doc h1::after {
+  content: "";
+  display: block;
+  width: 10.3rem;
+  height: .15rem;
+  background-color: #1AC4A2;
+  margin-top:.25rem;
+}
+
+.icono-subir {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  text-align: center;
+}
+
+.icono-subir i{
+  font-size: 40px;
+  color:#006cab;
+}
+
+.icono-subir p{
+  align-items: center;
+}
+
+.al-izq {
+  display: flex;
+  justify-content:flex-end;
+}
+
+.cuerpo i {
+  font-size: 30px;
+  margin-right: .5rem;
+  color: #006cab;
+}
+
+
 
 /* .card strong {
   line-height: 1.5;

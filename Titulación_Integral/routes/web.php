@@ -51,3 +51,5 @@ Route::post('/file/upload', 'FileController@guardarDocumento')->name('uploadfile
 Route::delete('/file/{id}', 'FileController@delete')->name('deletefile');
 
 Route::get('/file/download/{id}', 'FileController@download')->name('downloadfile');
+
+Route::get('/export/{type}', 'EstadisticaController@export');

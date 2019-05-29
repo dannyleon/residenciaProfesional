@@ -3,14 +3,16 @@
 @section('content2')
 @include('common.errors')
 
-
-<h1>Añadir Alumno</h1>
-
 <section class="no-margin contacto contenido-centrado">
   <form class="form-group" method="POST" action="/students"  enctype="multipart/form-data">
     @csrf
 
     <fieldset>
+
+      <div class="nav-create">
+        <h1>Añadir Alumno</h1>
+      </div>
+
       <div class="contenedor-campos">
 
         <legend>Información Personal</legend>

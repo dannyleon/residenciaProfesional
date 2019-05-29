@@ -3,12 +3,17 @@
 @section('content2')
 
 <div class="contenedor">
-  @if ($message = Session::get('success'))
-    <div id id="popo"class="alert alert-success">
-      <p>{{$message}}</p>
-    </div>
+
+  @if(Session::has('alert'))
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script>
+        swal("Bien hecho!", "Alumno Modificado");
+    </script>
   @endif
+
   <div id="message"> </div>
+
 </div>
 
 
@@ -21,14 +26,15 @@
       <h2 class="card-title no-margin"> {{$student->Apellidos}} {{$student->Nombre}} </h2>
 
       <div class="botones-seguimiento">
-
+        
+        <button class="btn btn-success btn-xs actualizar" style="display:none;" id="update">Actualizar</button>
         <!-- Condición para restrigir funciones de editar y eliminar al asistente del coordinador-->
         @if(Auth::user()->name == 'Coordinador Titulación')
-        <a href="/students/{{$student->id}}/edit" class="btn btn-primary">Editar</a>
-        <button type="submit" class="btn btn-danger eliminar" id="buttonDelete">Eliminar</button>
+        <a href="/students/{{$student->id}}/edit"> <i class="fas fa-user-edit" title="Editar Alumno"></i> </a>
+        {{-- <button type="submit" class="btn btn-danger eliminar" id="buttonDelete">Eliminar</button> --}}
         @endif
 
-        <button class="btn btn-success btn-xs actualizar" style="display:none;" id="update">Actualizar</button>
+
       </div>
 
     </div>
@@ -88,7 +94,7 @@
         <ul class="documentos">
 
           @foreach($files as $file)
-            <li><i class="far fa-file-alt"></i><a href="{{route('downloadfile',$file->id)}}">{{ $file->titulo }}</a></li>
+            <li><i class="far fa-file-alt"></i><a href="{{route('downloadfile', $file->id)}}">{{ $file->titulo }}</a></li>
           @endforeach
 
         </ul>

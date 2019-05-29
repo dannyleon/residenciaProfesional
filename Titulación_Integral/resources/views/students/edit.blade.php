@@ -4,17 +4,40 @@
 
   @include('common.errors')
 
-  {{-- @if(\Session::has('success'))
-    <div class="alert alert-success">
-      <p>{{\Session::get('success')}}</p>
-    </div>
-  @endif --}}
+  @if(Session::has('success'))
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script>
+        swal("Información Actualizada", "Presione  <Enter>", "success");
+    </script>
+
+  @endif
 
 <section class="no-margin contacto contenido-centrado">
+
+  <input type="hidden" id="student_id" value="{{ $student->id }}">
+
   <form class="form-group" method="POST" action="/students/{{$student->id}}"  enctype="multipart/form-data">
     @method('PUT')
     @csrf
     <fieldset>
+
+      <div class="nav-edit">
+
+        <div class="regresar">
+          <i class="fas fa-chevron-left" title="Regresar"></i>
+          <a href="{{route("students.show", $student)}}"> Regresar </a>
+        </div>
+
+        <h1 class="linea_baja">Editar Alumno</h1>
+
+        <div class="">
+
+        </div>
+
+      </div>
+
+
       <div class="contenedor-campos">
 
         <legend>Información Personal</legend>
@@ -139,12 +162,76 @@
     </fieldset>
 
     <div class="enviar">
-      <button class="btn btn-primary">Actualizar</button>
-      <a href="{{route("students.show",$student)}}" class="btn btn-danger"> Cancelar </a>
+      <button type="submit" class="btn btn-primary">Actualizar</button>
+      <a href="#" class="btn btn-danger eliminar" id="buttonDelete"> Eliminar </a>
     </div>
 
   </form>
 
+
 </section>
 
 @endsection
+
+<script src="{{asset('https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')}}"></script>
+<script src="{{asset('http://code.jquery.com/ui/1.11.0/jquery-ui.js')}}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script type="text/javascript">
+
+
+  $(document).ready(function(){
+
+    var student_id = $("#student_id").val();
+    var _token = $('input[name="_token"]').val();
+
+    $(document).on('click', '#buttonDelete', function(){
+
+      swal({
+        title: "¿Estás seguro?",
+        text: "Una vez eliminado, no podrás recuperar la información de este alumno.",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete)
+        {
+
+          $.ajax({
+            url:"{{ route('student.delete_data') }}",
+            method:"POST",
+            data:{id:student_id, _token:_token},
+            success:function(data)
+            {
+
+              swal("El Alumno ha sido Eliminado!", {
+                icon: "success",
+
+
+              }).then(function(){window.location.href = '{{url("students")}}'});
+
+              },
+              error: function(response){
+                swal({
+                  title: 'Oops...',
+                  text: data.message,
+                  type: 'error',
+                  timer:'1500'
+                })
+              }
+
+            });
+
+        }
+        else
+        {
+          //swal("Your imaginary file is safe!");
+        }
+      });
+    });// Cierre función delete
+
+
+  }); //cierre document ready function
+
+</script>

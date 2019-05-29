@@ -9,6 +9,7 @@ use TitIntegral\Metodo;
 use TitIntegral\Seguimiento;
 use TitIntegral\Estado;
 use TitIntegral\File;
+use Redirect;
 
 use Illuminate\Http\Request;
 
@@ -149,8 +150,8 @@ class StudentController extends Controller
      */
     public function show(Request $request, Student $student)
     {
-      return view('students.show', compact('student'));
-
+      $files = File::orderBy('titulo', 'ASC')->paginate(30);
+      return view('students.show', compact('student'))->with(['files' => $files]);
     }
 
     /**
@@ -177,6 +178,7 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
+
       //Validación de datos
       $validatedData = $request->validate([
       'numeroControl' => 'required|digits_between:1,10',
@@ -265,8 +267,11 @@ class StudentController extends Controller
         return $this->calculoSemestres($student->id);
 
         }
-      return redirect()->route("students.show",$student)->with('success','Alumno Modificado');
 
+
+      $files = File::orderBy('titulo', 'ASC')->paginate(30);
+
+      return Redirect::back()->with('success', 'Información Actualizada');
 
     }
 
@@ -306,5 +311,11 @@ class StudentController extends Controller
     {
         $student->delete();
         return redirect()->route("students.index")->with('eliminado','Alumno Eliminado');
+    }
+
+    public function mostrar(Request $request, Student $student, File $file)
+    {
+      return view('students.show', compact('student','file'));
+
     }
 }

@@ -26,24 +26,33 @@ class FileController extends Controller
       //     'file' => 'required|file|mimes:png,jpg,webp,gif,pdf,xsp,odt,docx|max:20000'
       // ]);
 
+
+
       $files = $request->file('file');
 
+      if($files){
 
+        foreach ($files as $file) {
 
+          if(preg_match('/[^\x20-\x7f]/', $file->getClientOriginalName()))
+          {
+            return redirect()->back()->with('alert', 'Mensaje');
+          }
 
-      foreach ($files as $file) {
-
-        if(preg_match('/[^\x20-\x7f]/', $file->getClientOriginalName()))
-        {
-          return "El titulo del documento contiene caracteres especiales";
+          File::create([
+            'titulo' => $file->getClientOriginalName(),
+            'path' => $file->store('public/storage')
+          ]);
         }
-        File::create([
-          'titulo' => $file->getClientOriginalName(),
-          'path' => $file->store('public/storage')
-        ]);
+
+        return redirect('/file')->with('success', 'Archivo Guardado');
+      }
+      else {
+        return redirect()->back()->with('alert2', 'Mensaje');
       }
 
-      return redirect('/file')->with('success', 'Archivo Guardado');
+
+
     }
 
     public function delete($id)

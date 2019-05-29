@@ -2,6 +2,23 @@
 @section('title', '- Subir')
 @section('content2')
 
+  @if(Session::has('alert'))
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script>
+        swal("El Título del Documento Contiene Caracteres Especiales", "Elimínelos o Remplácelos por caracteres válidos", "error");
+    </script>
+
+  @endif
+
+  @if(Session::has('alert2'))
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script>
+        swal("No ha Seleccionado Ningún Archivo", "Elija un archivo antes de intentar subirlo", "error");
+    </script>
+
+  @endif
 <div class="container">
   <div class="row">
     <div class="col-md-6 col-offset-md-4">

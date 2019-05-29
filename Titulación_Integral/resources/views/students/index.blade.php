@@ -1,7 +1,6 @@
 @extends('welcome')
 @section('content')
 
-
   @if(Session::has('alert'))
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -10,7 +9,6 @@
     </script>
 
   @endif
-
 
 <header class="site-header">
     <div class="contenedor contenido-header">
