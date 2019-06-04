@@ -58,7 +58,7 @@
           <label for="">Sexo:</label>
 
           <label class="radio-inline"><input type="radio" name="sexo" value="hombre" checked required>Hombre</label>
-          <label class="radio-inline"><input type="radio" name="sexo" value="mujer" checked required>Mujer</label>
+          <label class="radio-inline"><input type="radio" name="sexo" value="mujer"  required>Mujer</label>
 
         </div>
 

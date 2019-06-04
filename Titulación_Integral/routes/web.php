@@ -34,7 +34,7 @@ Route::get('/titulados', 'EstadisticaController@search');
 
 Route::get('/GraficaTitulados', 'EstadisticaController@datosGrafica');
 
-Auth::routes(['verify' => true]);
+Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -52,4 +52,5 @@ Route::delete('/file/{id}', 'FileController@delete')->name('deletefile');
 
 Route::get('/file/download/{id}', 'FileController@download')->name('downloadfile');
 
-Route::get('/export/{type}', 'EstadisticaController@export');
+// Route::get('/export/{type}', 'EstadisticaController@export');
+// Route::get('/export', 'EstadisticaController@exportExcel');

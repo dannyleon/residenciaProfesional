@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "45a5ae097fe1d1b3d4580b9bb8edb9d5",
+    "content-hash": "60e4e84243ec2e575327d9cd864c5961",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -972,6 +972,74 @@
             "time": "2018-10-15T13:53:10+00:00"
         },
         {
+            "name": "maatwebsite/excel",
+            "version": "3.1.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Maatwebsite/Laravel-Excel.git",
+                "reference": "d79ee01175c6a5e93f2a873dcda1b755b7570076"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Excel/zipball/d79ee01175c6a5e93f2a873dcda1b755b7570076",
+                "reference": "d79ee01175c6a5e93f2a873dcda1b755b7570076",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "illuminate/support": "5.5.*|5.6.*|5.7.*|5.8.*",
+                "opis/closure": "^3.1",
+                "php": "^7.0",
+                "phpoffice/phpspreadsheet": "^1.6"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.1",
+                "orchestra/database": "^3.8",
+                "orchestra/testbench": "^3.8",
+                "phpunit/phpunit": "^8.0",
+                "predis/predis": "^1.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Maatwebsite\\Excel\\ExcelServiceProvider"
+                    ],
+                    "aliases": {
+                        "Excel": "Maatwebsite\\Excel\\Facades\\Excel"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Maatwebsite\\Excel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Patrick Brouwers",
+                    "email": "patrick@maatwebsite.nl"
+                }
+            ],
+            "description": "Supercharged Excel exports and imports in Laravel",
+            "keywords": [
+                "PHPExcel",
+                "batch",
+                "csv",
+                "excel",
+                "export",
+                "import",
+                "laravel",
+                "php",
+                "phpspreadsheet"
+            ],
+            "time": "2019-05-08T12:05:59+00:00"
+        },
+        {
             "name": "markbaker/complex",
             "version": "1.4.7",
             "source": {
@@ -1431,16 +1499,16 @@
         },
         {
             "name": "phpoffice/phpspreadsheet",
-            "version": "1.6.0",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPOffice/PhpSpreadsheet.git",
-                "reference": "bf00f0cc5f55c354018f9a9ef15e6e3e1a229051"
+                "reference": "84e09df79855ed3da84e2eab6850eb7741d8cbda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PhpSpreadsheet/zipball/bf00f0cc5f55c354018f9a9ef15e6e3e1a229051",
-                "reference": "bf00f0cc5f55c354018f9a9ef15e6e3e1a229051",
+                "url": "https://api.github.com/repos/PHPOffice/PhpSpreadsheet/zipball/84e09df79855ed3da84e2eab6850eb7741d8cbda",
+                "reference": "84e09df79855ed3da84e2eab6850eb7741d8cbda",
                 "shasum": ""
             },
             "require": {
@@ -1521,7 +1589,7 @@
                 "xls",
                 "xlsx"
             ],
-            "time": "2019-01-02T04:42:54+00:00"
+            "time": "2019-05-26T02:50:36+00:00"
         },
         {
             "name": "psr/container",

@@ -41,9 +41,9 @@
       <a href="#" onclick="myFunction()" class="dropbtn"> <i class="fas fa-user-friends"></i>   {{ Auth::user()->name }} <i class="fa fa-caret-down"></i></a>
 
       <div id="myDropdown" class="dropdown-content">
-        <a id="salir" href="{{ route('logout') }}"  onclick= "event.preventDefault();
-                      document.getElementById('logout-form').submit();"> {{ __('Salir') }} </a>
 
+        <a  href="{{ route('logout') }}"  onclick= "event.preventDefault();
+                      document.getElementById('logout-form').submit();"> {{ __('Salir') }} </a>
 
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
@@ -152,21 +152,13 @@ window.onclick = function(event) {
   }
 }
 
-var form = document.getElementById("logout-form");
+// var form = document.getElementById("logout-form");
 
-document.getElementById("salir").addEventListener("click", function () {
-  form.submit();
-});
+// document.getElementById("salir").addEventListener("click", function () {
+//
+//   form.submit();
+//
+// });
 
-
-// Oculta la barra de busqueda principal
-// function myFunction() {
-//   var x = document.getElementById("contenedor-busqueda");
-//   if (x.style.display === "none") {
-//     x.style.display = "block";
-//   } else {
-//     x.style.display = "none";
-//   }
-// }
 
 </script>

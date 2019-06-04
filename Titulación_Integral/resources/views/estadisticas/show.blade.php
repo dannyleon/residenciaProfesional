@@ -28,14 +28,14 @@
       <button type="submit" class="btn btn-primary" id="mostrarGrafica">Mostrar Gráfica</button>
       <button type="submit" class="btn btn-primary" id="ocultar" title="Ocultar Gráfica"onclick="ocultarGrafica()" ><i class="fas fa-minus-circle"></i></button>
       <button type="submit" class="btn btn-primary" id="imprimir" title="Imprimir"><i class="fas fa-print"></i></button>
-      <button type="submit" class="btn btn-primary" id="exportarExcel" title="Expotar Excel" ><i class="fas fa-file-excel"></i></button>
+      {{-- <button type="submit" class="btn btn-primary" id="exportarExcel" title="Expotar Excel" ><i class="fas fa-file-excel"></i></button> --}}
     </div>
 
   </div>
 
     <div class="contenedor-campos noprint">
       <div class="campo">
-        <select id="periodoTIT" class="form-control">
+        <select name= "periodoTIT" id="periodoTIT" class="form-control">
           <option disabled selected>Período Escolar</option>
           <option value="3"> AÑO COMPLETO </option>
           <option value="1"> ENERO-JUNIO </option>
@@ -45,7 +45,7 @@
     </div>
 
       <div class="campo">
-        <input type="number" id="añoTIT" class="form-control" placeholder="Año">
+        <input type="number" name="añoTIT" id="añoTIT" class="form-control" placeholder="Año">
       </div>
 
       <div class="campo">
@@ -151,11 +151,10 @@
 
     $.ajax({
       type: "GET",
-      url : '{{URL::to('/export/xlsx')}}',
-      data:{ periodoTIT:periodoTIT, añoTIT:añoTIT, carrera:carrera },
+      url : '{{URL::to('/export')}}',
+      data:{ periodoTIT:periodoTIT, añoTIT:añoTIT, carrera:carrera},
       success:function(data){
 
-        console.log(data);
 
       }
 
@@ -220,28 +219,28 @@
                     data:data.cantidadTitulados,
                     backgroundColor:[
 
-                      'rgba(255,99,132,0.6)',
-                      'rgba(54,162,235,0.6)',
-                      'rgba(255,206,86,0.6)',
-                      'rgba(75,192,192,0.6)',
-                      'rgba(153,102,255,0.6)',
-                      'rgba(255,159,64,0.6)',
-                      'rgba(255,99,132,0.6)',
+                      'rgb(8, 105, 41)', //Administración - Verde
+                      'rgb(238, 126, 45)', //Arquitectura - Anaranjado
+                      'rgb(251, 234, 0)', //Contador Público - Amarillo
+                      'rgb(255, 255, 255)', //Ingeniería Ambiental - Blanco
+                      'rgb(255, 255, 255)', //Ingeniería Biomédica - Blanco
+                      'rgb(255, 255, 255)', //Ingeniería Bioquímica - Blanco
+                      'rgb(118, 060, 040)', //Ingeniería Civil - Café
 
-                      'rgba(255,99,132,0.6)',
-                      'rgba(54,162,235,0.6)',
-                      'rgba(255,206,86,0.6)',
-                      'rgba(75,192,192,0.6)',
-                      'rgba(153,102,255,0.6)',
-                      'rgba(255,159,64,0.6)',
-                      'rgba(255,99,132,0.6)',
+                      'rgb(010, 010, 010)', //Ingeniería Electromecánica - Negro
+                      'rgb(204, 006, 005)', //Ingeniería Electrónica - Rojo
+                      'rgb(010, 010, 010)', //Ingeniería Aeronáutica - Negro
+                      'rgb(156, 156, 156)', //Ingeniería Diseño Industrial - Gris
+                      'rgb(250, 210, 001)', //Ingeniería Gestión Empresarial - Dorado
+                      'rgb(108, 070, 117)', //Ingeniería Informática - Morado
+                      'rgb(234, 137, 154)', //Ingeniería Logística - Rosa
 
-                      'rgba(255,99,132,0.6)',
-                      'rgba(54,162,235,0.6)',
-                      'rgba(255,206,86,0.6)',
-                      'rgba(75,192,192,0.6)',
-                      'rgba(153,102,255,0.6)',
-                      'rgba(255,159,64,0.6)',
+                      'rgb(048, 132, 070)', //Ingeniería Nanotecnología - Verde Claro
+                      'rgb(034, 113, 179)', //Ingeniería Sistemas Computacionales - Azul
+                      'rgb(108, 070, 117)', //Ingeniería TICS - Morado
+                      'rgb(156, 156, 156)', //Ingeniería Industrial - Gris
+                      'rgb(255, 255, 255)', //Ingeniería Química - Blanco
+                      'rgb(010, 010, 010)', //Ingeniería Mecánica - Negro
 
                     ],
                     borderWidth:1,
@@ -295,28 +294,28 @@
                     data:data.cantidadTitulados,
                     backgroundColor:[
 
-                      'rgba(255,99,132,0.6)',
-                      'rgba(54,162,235,0.6)',
-                      'rgba(255,206,86,0.6)',
-                      'rgba(75,192,192,0.6)',
-                      'rgba(153,102,255,0.6)',
-                      'rgba(255,159,64,0.6)',
-                      'rgba(255,99,132,0.6)',
+                      'rgb(8, 105, 41)', //Administración - Verde
+                      'rgb(238, 126, 45)', //Arquitectura - Anaranjado
+                      'rgb(251, 234, 0)', //Contador Público - Amarillo
+                      'rgb(255, 255, 255)', //Ingeniería Ambiental - Blanco
+                      'rgb(255, 255, 255)', //Ingeniería Biomédica - Blanco
+                      'rgb(255, 255, 255)', //Ingeniería Bioquímica - Blanco
+                      'rgb(118, 060, 040)', //Ingeniería Civil - Café
 
-                      'rgba(255,99,132,0.6)',
-                      'rgba(54,162,235,0.6)',
-                      'rgba(255,206,86,0.6)',
-                      'rgba(75,192,192,0.6)',
-                      'rgba(153,102,255,0.6)',
-                      'rgba(255,159,64,0.6)',
-                      'rgba(255,99,132,0.6)',
+                      'rgb(010, 010, 010)', //Ingeniería Electromecánica - Negro
+                      'rgb(204, 006, 005)', //Ingeniería Electrónica - Rojo
+                      'rgb(010, 010, 010)', //Ingeniería Aeronáutica - Negro
+                      'rgb(156, 156, 156)', //Ingeniería Diseño Industrial - Gris
+                      'rgb(250, 210, 001)', //Ingeniería Gestión Empresarial - Dorado
+                      'rgb(108, 070, 117)', //Ingeniería Informática - Morado
+                      'rgb(234, 137, 154)', //Ingeniería Logística - Rosa
 
-                      'rgba(255,99,132,0.6)',
-                      'rgba(54,162,235,0.6)',
-                      'rgba(255,206,86,0.6)',
-                      'rgba(75,192,192,0.6)',
-                      'rgba(153,102,255,0.6)',
-                      'rgba(255,159,64,0.6)',
+                      'rgb(048, 132, 070)', //Ingeniería Nanotecnología - Verde Claro
+                      'rgb(034, 113, 179)', //Ingeniería Sistemas Computacionales - Azul
+                      'rgb(108, 070, 117)', //Ingeniería TICS - Morado
+                      'rgb(156, 156, 156)', //Ingeniería Industrial - Gris
+                      'rgb(255, 255, 255)', //Ingeniería Química - Blanco
+                      'rgb(010, 010, 010)', //Ingeniería Mecánica - Negro
 
                     ],
                     borderWidth:1,
