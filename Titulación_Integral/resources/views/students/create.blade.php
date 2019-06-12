@@ -80,17 +80,16 @@
         </div>
 
 
-        <div class="campo">
+        {{-- <div class="campo">
           <label for="añoIngreso">Año de Ingreso:</label>
           <input type="number" name="añoIngreso" id="añoIngreso" class="form-control" required>
         </div>
 
 
-
         <div class="campo campo-periodo">
           <label for="periodo">Periodo de Ingreso:</label><br>
           <input type="number" name="periodoIngreso" id="periodo" min="1" max="2" placeholder="1 ó 2"required>
-        </div>
+        </div> --}}
 
         <div class="campo w-100">
           <label for="opciones">Opciones para Titulación:</label>

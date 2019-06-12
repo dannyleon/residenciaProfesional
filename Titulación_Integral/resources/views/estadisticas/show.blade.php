@@ -9,7 +9,7 @@
     </script>
   @endif
 
-<section class=" contenedor">
+<section class="contenedor">
 
   <div class="barra-herramientas noprint">
 
@@ -28,7 +28,6 @@
       <button type="submit" class="btn btn-primary" id="mostrarGrafica">Mostrar Gráfica</button>
       <button type="submit" class="btn btn-primary" id="ocultar" title="Ocultar Gráfica"onclick="ocultarGrafica()" ><i class="fas fa-minus-circle"></i></button>
       <button type="submit" class="btn btn-primary" id="imprimir" title="Imprimir"><i class="fas fa-print"></i></button>
-      {{-- <button type="submit" class="btn btn-primary" id="exportarExcel" title="Expotar Excel" ><i class="fas fa-file-excel"></i></button> --}}
     </div>
 
   </div>
@@ -49,7 +48,6 @@
       </div>
 
       <div class="campo">
-        {{-- <label for="carrera">Carrera:</label> --}}
         <select name="carrera" id="carrera" class="form-control">
           <option value="">Selecciona una Carrera</option>
           <option value="0"> TODAS LAS CARRERAS </option>
@@ -128,39 +126,6 @@
     $('#ocultar').fadeOut();
   }
 
-  $('#exportarExcel').on('click',function(){
-
-    var p = document.getElementById("periodoTIT");
-    var c = document.getElementById("carrera");
-
-    var periodoTIT = p.options[p.selectedIndex].value;
-    var carrera = c.options[c.selectedIndex].value;
-    var añoTIT = $("#añoTIT").val();
-
-    var periodoLetra = "";
-
-    if(periodoTIT == 1){
-      periodoLetra = "Enero-Junio ";
-
-    }else if (periodoTIT == 2) {
-      periodoLetra = "Agosto-Diciembre ";
-
-    }else {
-      periodoLetra = "";
-    }
-
-    $.ajax({
-      type: "GET",
-      url : '{{URL::to('/export')}}',
-      data:{ periodoTIT:periodoTIT, añoTIT:añoTIT, carrera:carrera},
-      success:function(data){
-
-
-      }
-
-    });
-
-  });//Cierre exportarExcel
 
   $('#mostrarGrafica').on('click',function(){
 
@@ -386,7 +351,6 @@
 
           $('.contenedor-de-tablas').empty();
 
-
           //variables para contar hombres y mujeres de cada carrera
           var hombres = 0;
           var mujeres = 0;
@@ -409,13 +373,13 @@
           <th>No.Control</th>
           <th>Apellidos</th>
           <th>Nombre</th>
-          <th>Periodo Ingreso</th>
-          <th>Año Ingreso</th>
-          <th>Proyecto</th>
-          <th>PeriodoTIT</th>
-          <th>AñoTIT</th>
-          <th>FechaTIT</th>
-          <th>Semestres hasta Titulación</th>
+          <th style="text-align:center">Periodo Ingreso</th>
+          <th style="text-align:center">Año Ingreso</th>
+          <th style="text-align:center">Proyecto</th>
+          <th style="text-align:center">Periodo Titulación</th>
+          <th style="text-align:center">Año Titulación</th>
+          <th style="text-align:center">Fecha Titulación</th>
+
           </tr>`;
 
           //cabecera de la tabla
@@ -474,19 +438,17 @@
 
               }
 
-
             //datos del alumno
             html+= `<tr>
                         <td>${actualStudent.NoControl}</td>
                         <td>${actualStudent.Apellidos}</td>
                         <td>${actualStudent.Nombre}</td>
-                        <td>${actualStudent.PeriodoIngreso}</td>
-                        <td>${actualStudent.AñoIngreso}</td>
-                        <td>${actualStudent.seguimiento.metodo.nombre}</td>
-                        <td>${actualStudent.PeriodoTitulación}</td>
-                        <td>${actualStudent.AñoTitulación}</td>
-                        <td>${actualStudent.seguimiento.actoProtocolario}</td>
-                        <td>${actualStudent.SemestresCursados}</td>
+                        <td style="text-align:center">${actualStudent.PeriodoIngreso}</td>
+                        <td style="text-align:center">${actualStudent.AñoIngreso}</td>
+                        <td style="text-align:center">${actualStudent.seguimiento.metodo.nombre}</td>
+                        <td style="text-align:center">${actualStudent.PeriodoTitulación}</td>
+                        <td style="text-align:center">${actualStudent.AñoTitulación}</td>
+                        <td style="text-align:center">${actualStudent.seguimiento.actoProtocolario}</td>
                     </tr>`;
 
           } //cierre ciclo
@@ -524,7 +486,6 @@
           $('.contenedor-de-tablas').append(html);
 
           //$('tbody').html(data);
-
 
         }else {
           swal("No hay Alumnos Titulados con los Parámetros Seleccionados", "Alimente otros datos","warning");

@@ -124,18 +124,38 @@
           </select>
         </div>
 
+        @if($student->AñoIngreso != 0)
 
-        <div class="campo">
-          <label for="añoIngreso">Año de Ingreso:</label>
-          <input value="{{$student->AñoIngreso}}" type="number" name="añoIngreso" id="añoIngreso" class="form-control" required>
-        </div>
+          <div class="campo">
+            <label for="añoIngreso">Año de Ingreso:</label>
+            <input value="{{$student->AñoIngreso}}" type="number" name="añoIngreso" id="añoIngreso" class="form-control" required>
+          </div>
 
 
+          <div class="campo campo-periodo">
+            <label for="periodo">Periodo de Ingreso:</label><br>
+            <input value="{{$student->PeriodoIngreso}}" type="number" name="periodoIngreso" id="periodo" min="1" max="2" required>
+          </div>
 
-        <div class="campo campo-periodo">
-          <label for="periodo">Periodo de Ingreso:</label><br>
-          <input value="{{$student->PeriodoIngreso}}" type="number" name="periodoIngreso" id="periodo" min="1" max="2" required>
-        </div>
+          @else
+
+              <div class="campo">
+                <div class="red">
+                  <label for="añoIngreso">Año de Ingreso:</label>
+                </div>
+                <input value="{{$student->AñoIngreso}}" type="number" name="añoIngreso" id="añoIngreso" class="form-control" required>
+              </div>
+
+
+              <div class="campo campo-periodo">
+                <div class="red">
+                  <label for="periodo">Periodo de Ingreso:</label><br>
+                </div>
+                <input value="{{$student->PeriodoIngreso}}" type="number" name="periodoIngreso" id="periodo" min="1" max="2" required>
+              </div>
+
+        @endif
+
 
         <div class="campo w-100">
           <label for="">Opciones para Titulación:</label>

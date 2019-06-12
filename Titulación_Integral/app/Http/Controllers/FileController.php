@@ -22,11 +22,6 @@ class FileController extends Controller
 
     public function guardarDocumento(Request $request)
     {
-      // $this->validate($request, [
-      //     'file' => 'required|file|mimes:png,jpg,webp,gif,pdf,xsp,odt,docx|max:20000'
-      // ]);
-
-
 
       $files = $request->file('file');
 
@@ -50,8 +45,6 @@ class FileController extends Controller
       else {
         return redirect()->back()->with('alert2', 'Mensaje');
       }
-
-
 
     }
 

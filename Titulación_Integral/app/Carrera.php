@@ -1,6 +1,6 @@
 <?php
 
-  namespace TitIntegral;
+namespace TitIntegral;
 
 use Illuminate\Database\Eloquent\Model;
 

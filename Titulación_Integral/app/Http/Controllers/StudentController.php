@@ -1,7 +1,6 @@
 <?php
 
 namespace TitIntegral\Http\Controllers;
-
 use TitIntegral\Student;
 use TitIntegral\Telefono;
 use TitIntegral\Carrera;
@@ -9,7 +8,9 @@ use TitIntegral\Metodo;
 use TitIntegral\Seguimiento;
 use TitIntegral\Estado;
 use TitIntegral\File;
+use Carbon\Carbon;
 use Redirect;
+
 
 use Illuminate\Http\Request;
 
@@ -59,8 +60,8 @@ class StudentController extends Controller
         'apellido' => 'required|max:191',
         'correo' => 'required|max:191',
         'carrera' => 'required',
-        'añoIngreso' => 'required|numeric|digits:4',
-        'periodoIngreso' => 'required|numeric|digits:1',
+        // 'añoIngreso' => 'required|numeric|digits:4',
+        // 'periodoIngreso' => 'required|numeric|digits:1',
         'sexo' => 'required|max:191',
         'tel1' => 'required|max:191',
         'tel2' => 'max:191',
@@ -78,8 +79,8 @@ class StudentController extends Controller
         $student->Apellidos = $request->input('apellido');
         $student->Correo = $request->input('correo');
         $student->Carrera_id = $request->input('carrera');
-        $student->AñoIngreso = $request->input('añoIngreso');
-        $student->PeriodoIngreso = $request->input('periodoIngreso');
+        $student->AñoIngreso = 0;
+        $student->PeriodoIngreso = 0;
         $student->Sexo = $request->input('sexo');
 
         $student->save();
@@ -186,8 +187,8 @@ class StudentController extends Controller
       'apellido' => 'required|max:191',
       'correo' => 'required|max:191',
       'carrera' => 'required',
-      'añoIngreso' => 'required|numeric|digits:4',
-      'periodoIngreso' => 'required|numeric|digits:1',
+      'añoIngreso' => 'numeric|digits:4',
+      'periodoIngreso' => 'numeric|digits:1',
       'sexo' => 'required|max:191',
       'tel1' => 'required|max:191',
       'tel2' => 'max:191',
@@ -254,7 +255,6 @@ class StudentController extends Controller
         ]);
       }
 
-
       $seguimiento = Seguimiento::where('id',$student->id)
       ->update([
         'metodo_id'=>$request->input('metodo'),
@@ -262,12 +262,40 @@ class StudentController extends Controller
         'recibido'=>$request->input('recibido')
       ]);
 
-      if( $periodoActual != $request->input('periodoIngreso')){
 
-        return $this->calculoSemestres($student->id);
+      // $seguimiento = Seguimiento::where('id',$student->id);
+
+      if($student->seguimiento->actoProtocolario != 0)
+      {
+        $fecha = new Carbon($student->seguimiento->actoProtocolario);
+        $fecha->year;
+        $fecha->month;
+
+        if($fecha->month == '1'|| $fecha->month == '2' || $fecha->month == '3'|| $fecha->month == '4'|| $fecha->month == '5'|| $fecha->month == '6' )
+        {
+          // $student = Student::where('id',$student->id)
+          // ->update(["AñoTitulación"=> $fecha->year, "PeriodoTitulación" => 1]);
+
+          $student->AñoTitulación = $fecha->year;
+          $student->PeriodoTitulación = 1;
+          $student->save();
+
+          $seguimiento = Seguimiento::where('id',$student->id)
+          ->update(["status_id" => 2]);
+
+        }
+        else {
+
+          $student->AñoTitulación = $fecha->year;
+          $student->PeriodoTitulación = 2;
+          $student->save();
+
+          $seguimiento = Seguimiento::where('id',$student->id)
+          ->update(["status_id" => 2]);
 
         }
 
+      }
 
       $files = File::orderBy('titulo', 'ASC')->paginate(30);
 
@@ -275,31 +303,31 @@ class StudentController extends Controller
 
     }
 
-    public function calculoSemestres($id)
-    {
-      //Cálculo de semestres Cursados
-      $student = Student::where('id',$id)->first();
-      $AT = $student->AñoTitulación;
-      $AI = $student->AñoIngreso;
-      $PT = $student->PeriodoTitulación;
-      $PI = $student->PeriodoIngreso;
-
-      $semestresTotales = ($AT-$AI) * 2;
-      $periodo = ($PI-$PT);
-
-
-      if($periodo == 1) {
-        $student->SemestresCursados = $semestresTotales;
-      }
-      elseif ($periodo == 0) {
-        $student->SemestresCursados = $semestresTotales + 1;
-      }else {
-        $student->SemestresCursados = $semestresTotales + 2;
-      }
-
-      $student->save();
-      return redirect()->route("students.show",$student)->with('success','Alumno Modificado');
-    }
+    // public function calculoSemestres($id)
+    // {
+    //   //Cálculo de semestres Cursados
+    //   $student = Student::where('id',$id)->first();
+    //   $AT = $student->AñoTitulación;
+    //   $AI = $student->AñoIngreso;
+    //   $PT = $student->PeriodoTitulación;
+    //   $PI = $student->PeriodoIngreso;
+    //
+    //   $semestresTotales = ($AT-$AI) * 2;
+    //   $periodo = ($PI-$PT);
+    //
+    //
+    //   if($periodo == 1) {
+    //     $student->SemestresCursados = $semestresTotales;
+    //   }
+    //   elseif ($periodo == 0) {
+    //     $student->SemestresCursados = $semestresTotales + 1;
+    //   }else {
+    //     $student->SemestresCursados = $semestresTotales + 2;
+    //   }
+    //
+    //   $student->save();
+    //   return redirect()->route("students.show",$student)->with('success','Alumno Modificado');
+    // }
 
     /**
      * Remove the specified resource from storage.

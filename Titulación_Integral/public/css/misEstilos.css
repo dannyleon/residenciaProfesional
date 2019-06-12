@@ -451,6 +451,11 @@ label {
   margin:0;
 }
 
+.red label {
+  color:#ff3f57;
+  font-weight: bold;
+}
+
 .w-100 {
   flex: 0 0 100%;
 }
@@ -506,6 +511,13 @@ label {
   color:#006cab;
   font-size: 26px;
 }
+
+.red i {
+  color:#ff3f57;
+  font-size: 26px;
+}
+
+
 .botones-seguimiento .eliminar{
   background-color: #ff3f57;
   padding: 2px 20px;
@@ -581,7 +593,7 @@ label {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin-top: 2rem;
+  margin-top: 1rem;
   /* border: 1px solid #e2e2e2; */
 }
 
@@ -596,7 +608,7 @@ label {
 }
 
 .caja-observaciones {
-  height:18rem;
+  height:15rem;
   border: 1px solid #e2e2e2;
 }
 
@@ -616,7 +628,7 @@ label {
 
 .textarea textarea {
   margin-top: 1rem;
-  height: 78%;
+  height: 74%;
   width: 100%;
   /* box-sizing:border-box; */
   padding: .75rem;
@@ -648,7 +660,7 @@ label {
 }
 
 .caja-documentos {
-  height:18rem;
+  height:15rem;
   border: 1px solid #e2e2e2;
 }
 

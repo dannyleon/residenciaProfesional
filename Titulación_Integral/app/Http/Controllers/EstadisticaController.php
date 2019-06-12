@@ -39,7 +39,6 @@ class EstadisticaController extends Controller
           $sortedStudents = $students->sortBy('Carrera_id')->values();
           return Response($sortedStudents);
 
-
           //Si es por periodos y todas las carreras
         }elseif ($request->periodoTIT != '3' && $request->carrera == '0'){
 
@@ -79,7 +78,6 @@ class EstadisticaController extends Controller
           return Response($sortedStudents);
 
         }
-
 
        }
 
@@ -136,47 +134,5 @@ class EstadisticaController extends Controller
       $carreras = Carrera::all();
       return $carreras;
     }
-
-
-    // public function export(Request $request)
-    // {
-    //
-    //     $arreglo_Carreras = array();
-    //     $arreglo_Cantidad_Titulados = array();
-    //     $carreras = $this->obtenerCarreras();
-    //
-    //     //Agrega cada nombre de carrera por separado a un arreglo y el numero de titulados por carrera a otro arreglo
-    //     foreach($carreras as $carrera) {
-    //       $numero_titulados_por_año = $this->contarTitulados($carrera->id,$request);
-    //       array_push( $arreglo_Cantidad_Titulados, $numero_titulados_por_año );
-    //       array_push( $arreglo_Carreras, $carrera->nombre );
-    //     }
-    //
-    //     $numero_maximo = max($arreglo_Cantidad_Titulados);
-    //     $max = round(($numero_maximo + 10/2)/10) *10;
-    //
-    //     $datos_para_grafica = array(
-    //       'carreras' => $arreglo_Carreras,
-    //       'cantidadTitulados' => $arreglo_Cantidad_Titulados,
-    //       'max' => $max,
-    //     );
-    //
-    //     $type = 'xlsx';
-    //
-    //
-    //     $this->exportExcel($datos_para_grafica, $type);
-    //     // return $datos_para_grafica;
-    //
-    // }
-
-    // public function exportExcel(Request $request) {
-    //
-    //     return Excel::download(new StudentExport($request->periodoTIT, $request->añoTIT, $request->carrera) , 'students.xlsx');
-    //
-    // }
-
-
-
-
 
 }

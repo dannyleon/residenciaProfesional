@@ -22,7 +22,11 @@ class ajaxController extends Controller
         $student = Student::where('id', '=', $id)->first();
 
         $seguimiento = ["autRegistro" => $student->seguimiento->autRegistro, "recibido" => $student
-        ->seguimiento->recibido, "liberación"=>$student->seguimiento->liberación,"solicitudActo"=>$student->seguimiento->solicitudActo,"actoProtocolario"=>$student->seguimiento->actoProtocolario, "status"=>$student->seguimiento->status->nombre, "observaciones"=>$student->seguimiento->observaciones];
+        ->seguimiento->recibido, "liberación"=>$student->seguimiento->liberación,"solicitudActo"=>$student->seguimiento->solicitudActo,"actoProtocolario"=>$student->seguimiento->actoProtocolario,
+        "añoTitulación"=>$student->AñoTitulación, "PeriodoTitulación"=>$student->PeriodoTitulación,
+
+
+         "status"=>$student->seguimiento->status->nombre, "observaciones"=>$student->seguimiento->observaciones];
 
         echo json_encode($seguimiento);
       }
@@ -41,20 +45,19 @@ class ajaxController extends Controller
             "liberación"=>$request->liberación,
             "solicitudActo"=>$request->solicitudActo,"actoProtocolario"=>$request->actoProtocolario,
             "observaciones"=> ""]);
-          }
-          else {
-            $seguimiento = Seguimiento::where('id',$request->id)
-            ->update(["autRegistro" => $request->autRegistro, "recibido" => $request->recibido,
-            "liberación"=>$request->liberación,
-            "solicitudActo"=>$request->solicitudActo,"actoProtocolario"=>$request->actoProtocolario,
-            "observaciones"=>$request->observaciones]);
-
+          }else {
+              $seguimiento = Seguimiento::where('id',$request->id)
+              ->update(["autRegistro" => $request->autRegistro, "recibido" => $request->recibido,
+              "liberación"=>$request->liberación,
+              "solicitudActo"=>$request->solicitudActo,"actoProtocolario"=>$request->actoProtocolario,
+              "observaciones"=>$request->observaciones]);
           }
 
 
           $seguimiento = Seguimiento::where('id',$request->id)->first();
+          $student = Student::where('id',$request->id)->first();
 
-          if($seguimiento->actoProtocolario != null)
+          if($seguimiento->actoProtocolario != null && $student->AñoIngreso != 0)
           {
             $fecha = new Carbon($seguimiento->actoProtocolario);
             $fecha->year;
@@ -68,12 +71,9 @@ class ajaxController extends Controller
               $seguimiento = Seguimiento::where('id',$request->id)
               ->update(["status_id" => 2]);
 
-
-
-              //echo 'Información Actualizada';
-
             }
-            else {
+            else
+            {
 
               $student = Student::where('id',$request->id)
               ->update(["AñoTitulación"=> $fecha->year, "PeriodoTitulación" => 2]);
@@ -81,45 +81,18 @@ class ajaxController extends Controller
               $seguimiento = Seguimiento::where('id',$request->id)
               ->update(["status_id" => 2]);
 
-              //echo 'Información Actualizada';
             }
 
-            //Cálculo de semestres Cursados
-            $student = Student::where('id',$request->id)->first();
-            $AT = $student->AñoTitulación;
-            $AI = $student->AñoIngreso;
-            $PT = $student->PeriodoTitulación;
-            $PI = $student->PeriodoIngreso;
-
-            $semestresTotales = ($AT-$AI) * 2;
-            $periodo = ($PI-$PT);
-
-
-            if($periodo == 1) {
-              $student->SemestresCursados = $semestresTotales;
-            }
-            elseif ($periodo == 0) {
-              $student->SemestresCursados = $semestresTotales + 1;
-            }else {
-              $student->SemestresCursados = $semestresTotales + 2;
-            }
-
-            $student->save();
             echo 'Información Actualizada';
-
           }
-          else {
 
+          else
+          {
             $seguimiento = Seguimiento::where('id',$request->id)
             ->update(["status_id" => 1]);
 
             $student = Student::where('id', $request->id)
             ->update(["AñoTitulación" => 0, "PeriodoTitulación" => 0]);
-
-            $student = Student::where('id', $request->id)
-            ->update(["SemestresCursados" => 0]);
-
-
 
             echo 'Información Actualizada';
           }
